@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useIPFS } from "@/hooks/useIpfs";
 
 import Spinner from "@/components/spinner";
 
@@ -10,6 +11,7 @@ const FileUploader = () => {
   const [fileUrl, setFileUrl] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const { upload } = useIPFS();
 
   useEffect(() => {
     let fileReader: FileReader;
@@ -48,9 +50,11 @@ const FileUploader = () => {
   const onClickIssueContract = async () => {
     if (file && email) {
       setIsLoading(true);
-
+      const cid = await upload(file);
+      alert(cid);
       try {
         // issue contract documents
+
       } catch (error) {
         toast.error(error as string);
       } finally {
