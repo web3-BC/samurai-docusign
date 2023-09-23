@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@biconomy/account": "3.1.0",
+    "@biconomy/bundler": "3.1.0",
+    "@biconomy/core-types": "3.1.0",
+    "@biconomy/modules": "3.1.0",
+    "@biconomy/paymaster": "3.1.0",
     "@lit-protocol/lit-node-client": "^2.2.54",
     "@lit-protocol/types": "^2.2.54",
     "@privy-io/react-auth": "^1.40.3",
