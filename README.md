@@ -16,6 +16,14 @@ A project for ETHGlobal New York 2023!
 
 🌐 Multi-chain support! (Polygon zkEVM / Arbitrum One / Scroll Sepolia)
 
+### Contract address
+
+| Chain          | ChainId | contract address                           |
+| -------------- | ------- | ------------------------------------------ |
+| Polygon Mumbai | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
+| Scroll Sepolia | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
+| Arbitrum One   | 42161   |                                            |
+
 ### User experience flow
 
 (write later...)
