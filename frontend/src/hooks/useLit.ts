@@ -57,11 +57,13 @@ export const useLit = () => {
     encryptedString: string,
     encryptedSymmetricKey: string,
   ) => {
+    connect();
+
     const siweMessage = new SiweMessage({
       domain: "localhost",
       address,
       statement: "test",
-      uri: "https://localhost:3000/signers/12",
+      uri: "http://localhost:3000/signers/sign-in",
       version: "1",
       chainId: 421613,
     });
