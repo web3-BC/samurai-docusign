@@ -44,10 +44,10 @@ const FileUploader = () => {
   const onChangeFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    if (file?.type !== "application/pdf") {
-      toast("PDFs are only supported");
-      return;
-    }
+    // if (file?.type !== "application/pdf") {
+    //   toast("PDFs are only supported");
+    //   return;
+    // }
 
     setFile(file);
   }, []);
@@ -57,29 +57,30 @@ const FileUploader = () => {
       setIsLoading(true);
       try {
         const cid = await upload(file);
-        const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
+        console.log(cid)
+        // const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
 
-        console.log("encryptedCID:", encryptedCID);
-        console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+        // console.log("encryptedCID:", encryptedCID);
+        // console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
 
-        const hashedEmail = hashEmail(email);
+        // const hashedEmail = hashEmail(email);
 
-        const walletClient = createWalletClient({
-          chain: currentChain,
-          transport: custom(window.ethereum),
-        });
-        const [account] = await walletClient.getAddresses();
+        // const walletClient = createWalletClient({
+        //   chain: currentChain,
+        //   transport: custom(window.ethereum),
+        // });
+        // const [account] = await walletClient.getAddresses();
 
-        const { request } = await publicClient.simulateContract({
-          account,
-          address: CONTRACT_ADDRESS,
-          abi: ABI,
-          functionName: "issueContract",
-          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
-        });
+        // const { request } = await publicClient.simulateContract({
+        //   account,
+        //   address: CONTRACT_ADDRESS,
+        //   abi: ABI,
+        //   functionName: "issueContract",
+        //   args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
+        // });
 
-        const txHash = await walletClient.writeContract(request);
-        toast.success(`your tx has been sent: ${txHash}`);
+        // const txHash = await walletClient.writeContract(request);
+        // toast.success(`your tx has been sent: ${txHash}`);
       } catch (error) {
         toast.error(error as string);
       } finally {
