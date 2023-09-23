@@ -52,7 +52,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           loginMethods: ["google", "email"],
           appearance: {
             theme: "light",
-            accentColor: "#676FFF",
+            accentColor: "#33257F",
             logo: "",
           },
           embeddedWallets: {
@@ -68,6 +68,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         projectId={projectID}
         ethereumClient={ethereumClient}
         defaultChain={polygonMumbai}
+        themeVariables={{
+          "--w3m-font-family": "B612, sans-serif",
+          "--w3m-accent-fill-color": "#33257F",
+          "--w3m-background-color": "#33257F",
+          "--w3m-accent-color": "#FFF",
+        }}
       />
     </>
   );

@@ -71,7 +71,7 @@ const CreateContractPage = () => {
   };
 
   return (
-    <main className="h-[calc(100vh-70px)] bg-slate-50 py-16">
+    <main className="h-[calc(100vh-70px)] py-16">
       <div className="mx-auto w-[1200px]">
         <Stepper currentStep={currentStep} className="mb-8" />
         {(() => {

@@ -1,11 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { B612 } from "next/font/google";
 
 import Header from "@/components/header";
 import Providers from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const b612 = B612({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Samurai Sign",
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={b612.className}>
         <Header />
         <Providers>{children}</Providers>
       </body>
