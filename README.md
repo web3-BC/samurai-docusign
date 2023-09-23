@@ -1,8 +1,36 @@
 # Samurai DocuSign
 
+A project for ETHGlobal New York 2023!
+
+## Project Abstract
+
+**Trustless** & **UX evolved** document signing dApp!!
+
+✨ No censorship & control by App. True P2P contract signing
+
+🔥 Gasless signing user experience by AA and paymaster. _Signer doesn't need wallet & gas fee_
+
+👁 Sybil Resistant by WorldID. _Only human_ can issue a legit contract document.
+
+💎 Secure access control, encrypt & decrypt by Lit & IPFS.
+
+🌐 Multi-chain support! (Polygon zkEVM / Arbitrum One / Scroll Sepolia)
+
+### Contract address
+
+| Chain          | ChainId | contract address                           |
+| -------------- | ------- | ------------------------------------------ |
+| Polygon Mumbai | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
+| Scroll Sepolia | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
+| Arbitrum One   | 42161   |                                            |
+
+### User experience flow
+
+(write later...)
+
 ## Tech Architecture
 
-We have 2 actors in App.
+2 actors in App.
 
 - Issuer(create a contract document)
 - Signer(sign a contract issued by Issuer)
@@ -23,6 +51,9 @@ We have 2 actors in App.
 3. create SCW(Smart Account) with Biconomy SDK
 4. verify the signer has a expected email with LitAction
 5. decrypt the `encryptedCID` and get document CID
-6. view the contract document with CID and sign it
+6. view the contract document with CID
+7. sign with Gasless tx by Biconomy SDK
+
+### Sequence
 
 ![technical architecture](./public//architecture.png)
