@@ -7,22 +7,20 @@ export const client = new LitJsSdk.LitNodeClient({
 });
 export const chain = "ethereum";
 
-// prod
 export const litActionUrl =
-  "ipfs://QmUr1xcmcTkb7rqxscEdqJ5iAf2YQGL9N1pbtQkbkjkEJc";
-// const litActionUrl = 'ipfs://QmUr1xcmcTkb7rqxscEdqJ5iAf2YQGL9N1pbtQkbkjkEJc'
+  "ipfs://QmX3ATabgddAd1fhtsQjWzFGFsYRmKzBZXXEusYaUNurcT";
 
 export const litActionCode = `
 const verify = async () => {
   try {
     // fetch hashedEmail from contract
-    const url = "https://samurai-smart-sign.vercel.app/api/get_hashed_email?enCid=" + enCid;
+    const url = "https://samurai-docusign.vercel.app/api/get_hashed_email?enCid=" + enCid;
     const res = await fetch(url);
     const result = await res.json();
     console.log(result);
 
     // get hashed email from privy JWT
-    const url2 = "https://samurai-smart-sign.vercel.app/api/get_hashed_email_from_jwt?jwt=" + jwt;
+    const url2 = "https://samurai-docusign.vercel.app/api/get_hashed_email_from_jwt?jwt=" + jwt;
     const res2 = await fetch(url2);
     const result2 = await res2.json();
     console.log(result2);

@@ -35,6 +35,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
 
   const handlePrivyOnSuccess = (user: User) => {
+    console.log(user);
     const path = localStorage.getItem("recepientPath") || "";
     router.push(path);
   };

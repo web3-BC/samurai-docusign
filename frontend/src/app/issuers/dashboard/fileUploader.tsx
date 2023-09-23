@@ -3,9 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useIPFS } from "@/hooks/useIpfs";
-
 import Spinner from "@/components/spinner";
 import { useLit } from "@/hooks/useLit";
+import { hashEmail } from "@/app/utils";
+import { createWalletClient, custom } from "viem";
+import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
+import { ABI } from "@/constants";
 
 const FileUploader = () => {
   const [file, setFile] = useState<File>();
@@ -52,15 +55,31 @@ const FileUploader = () => {
   const onClickIssueContract = async () => {
     if (file && email) {
       setIsLoading(true);
-      const cid = await upload(file);
-      alert(cid);
-      const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
-      console.log("encryptedCID:", encryptedCID);
-      console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
       try {
-        // issue contract documents
-        
+        const cid = await upload(file);
+        const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
 
+        console.log("encryptedCID:", encryptedCID);
+        console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+
+        const hashedEmail = hashEmail(email);
+
+        const walletClient = createWalletClient({
+          chain: currentChain,
+          transport: custom(window.ethereum),
+        });
+        const [account] = await walletClient.getAddresses();
+
+        const { request } = await publicClient.simulateContract({
+          account,
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "issueContract",
+          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
+        });
+
+        const txHash = await walletClient.writeContract(request);
+        toast.success(`your tx has been sent: ${txHash}`);
       } catch (error) {
         toast.error(error as string);
       } finally {
