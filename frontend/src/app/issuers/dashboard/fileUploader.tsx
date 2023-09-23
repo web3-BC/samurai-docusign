@@ -77,7 +77,6 @@ const FileUploader = () => {
           functionName: "issueContract",
           args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
         });
-
         const txHash = await walletClient.writeContract(request);
         toast.success(`your tx has been sent: ${txHash}`);
       } catch (error) {
