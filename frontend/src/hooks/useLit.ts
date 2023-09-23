@@ -1,7 +1,7 @@
 "use client";
 
 import { createWalletClient, custom } from "viem";
-import { chain, client } from "@/libs/lit";
+import { chain, client, litActionUrl } from "@/libs/lit";
 import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import { SiweMessage } from "siwe";
 import { AccessControlConditions, AuthSig } from "@lit-protocol/types";
@@ -15,11 +15,11 @@ export const useLit = () => {
 
   const ACCs: AccessControlConditions = [
     {
-      contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+      contractAddress: litActionUrl,
       standardContractType: "LitAction",
       chain: chain,
-      method: "go",
-      parameters: ["100"],
+      method: "verify",
+      parameters: ["", ""],
       returnValueTest: {
         comparator: "=",
         value: "true",
@@ -29,6 +29,8 @@ export const useLit = () => {
 
   const encrypt = async (cid: string) => {
     await connect();
+
+    console.log(cid);
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
     
@@ -58,16 +60,17 @@ export const useLit = () => {
     address: string,
     encryptedString: string,
     encryptedSymmetricKey: string,
+    jwt: string,
   ) => {
     connect();
 
     const ACCs: AccessControlConditions = [
       {
-        contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+        contractAddress: litActionUrl,
         standardContractType: "LitAction",
         chain: chain,
-        method: "go",
-        parameters: ["120"],
+        method: "verify",
+        parameters: [encryptedString, jwt],
         returnValueTest: {
           comparator: "=",
           value: "true",
@@ -126,7 +129,9 @@ export const useLit = () => {
   const updateACCs = async(
     provider: EIP1193Provider,
     address: string,
-    encryptedSymmetricKey: string) => {
+    encryptedString: string,
+    encryptedSymmetricKey: string,
+    jwt: string) => {
 
     connect();
 
@@ -163,13 +168,13 @@ export const useLit = () => {
       address: address,
     };
 
-    const newAccessControlConditions: AccessControlConditions = [
+    const newACCs: AccessControlConditions = [
       {
-        contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+        contractAddress: litActionUrl,
         standardContractType: "LitAction",
         chain: chain,
-        method: "go",
-        parameters: ["120"],
+        method: "verify",
+        parameters: [encryptedString, jwt],
         returnValueTest: {
           comparator: "=",
           value: "true",
@@ -185,7 +190,7 @@ export const useLit = () => {
     });
 
     const newEncryptedSymmetricKey = await client.saveEncryptionKey({
-      accessControlConditions: newAccessControlConditions,
+      accessControlConditions: newACCs,
       symmetricKey,
       authSig,
       chain,
