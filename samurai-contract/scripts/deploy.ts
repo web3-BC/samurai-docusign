@@ -4,9 +4,9 @@ async function main() {
   const contract = await ethers.getContractFactory("ContractManager");
   const Contract = await contract.deploy();
 
-  const deployedContract = await Contract.deployed();
+  const deployedContract = await Contract.waitForDeployment();
 
-  console.log(`deployed contract: ${deployedContract}`);
+  console.log(`deployed contract: ${await deployedContract.getAddress()}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

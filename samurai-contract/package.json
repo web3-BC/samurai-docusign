@@ -1,16 +1,16 @@
 {
-	"name": "contract-manager",
-	"scripts": {
-	  "migrate:arbitrumGoerli": "npx hardhat run --network arbitrumGoerli scripts/deploy.ts",
-	  "migrate:mumbai": "npx hardhat run --network mumbai scripts/deploy.ts",
-	  "prettier": "npx prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
-	},
-	"devDependencies": {
-	  "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-	  "dotenv": "16.3.1",
-	  "hardhat": "^2.17.2",
-	  "prettier": "3.0.3",
-	  "prettier-plugin-solidity": "1.1.3"
-	}
+  "name": "contract-manager",
+  "scripts": {
+    "migrate:arbitrumGoerli": "npx hardhat run --network arbitrumGoerli scripts/deploy.ts",
+    "migrate:mumbai": "npx hardhat run --network mumbai scripts/deploy.ts",
+    "migrate:zkEvm": "npx hardhat run --network zkEvm scripts/deploy.ts",
+    "prettier": "npx prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "dotenv": "16.3.1",
+    "hardhat": "^2.17.2",
+    "prettier": "3.0.3",
+    "prettier-plugin-solidity": "1.1.3"
   }
-  
+}
