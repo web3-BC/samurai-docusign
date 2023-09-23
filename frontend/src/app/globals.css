@@ -18,7 +18,7 @@
 
 /* Custom Class */
 .bg-gradient {
-  background: linear-gradient(130deg, #f12d2d, #fea879, #33257f);
+  background: linear-gradient(130deg, #f12d2d, #FEC08E, #33257f);
   background-size: 200% 200%;
   animation: gradient-animation 12s ease infinite;
 }

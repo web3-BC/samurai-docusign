@@ -4,6 +4,7 @@ import { B612 } from "next/font/google";
 
 import Header from "@/components/header";
 import Providers from "./providers";
+import Footer from "@/components/footer";
 
 const b612 = B612({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={b612.className}>
         <Header />
         <Providers>{children}</Providers>
+        <Footer />
       </body>
     </html>
   );

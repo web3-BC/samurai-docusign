@@ -16,65 +16,120 @@ const LandingPage = () => {
           </div>
         </header>
         <div className="px-20 py-56">
-          <h2 className="inline text-6xl font-bold leading-[74px] text-white">
-            Trustless & UX evolved <br />
-            Document Signing dApp
-          </h2>
+          <div className="mr-auto max-w-fit">
+            <h2 className="inline text-6xl font-bold leading-[74px] text-white">
+              Trustless & UX evolved <br />
+              Document Signing dApp
+            </h2>
+            <div className="ml-auto mt-6 max-w-fit rounded-2xl border border-white px-6 py-2 text-2xl font-bold text-white">
+              <Link href={"/issuers/contracts/new"}>Create New Contract</Link>
+            </div>
+          </div>
         </div>
       </section>
-      <section className="mx-auto bg-white px-20 py-10">
+      <section className="mx-auto bg-white px-20 py-14">
         <h2 className="text-5xl font-bold text-secondary-500">
           Multi-Chain Support
         </h2>
-        <p className="mt-3 text-secondary-500">
+        <p className="mt-4 text-secondary-500">
           Samurai sign supports multiple chains from L1 such as Ethereum to EVM
           compatible L2 chains such as arbitrum and scroll.
         </p>
-        <div className="mt-4 grid grid-cols-4 items-center gap-2 px-10">
+        <div className="mt-4 grid grid-cols-2 items-center justify-around gap-2 px-56">
           <Image
-            height={160}
-            width={32}
+            height={32}
+            width={160}
             src={"/images/eth-logo.svg"}
             alt="Chain Logo"
             className="w-full"
           />
           <Image
-            height={160}
-            width={32}
+            height={32}
+            width={160}
             src={"/images/polygon-logo.svg"}
             alt="Chain Logo"
             className="w-full"
           />
           <Image
-            height={160}
-            width={32}
+            height={32}
+            width={160}
             src={"/images/scroll-logo.svg"}
             alt="Chain Logo"
             className="w-full"
           />
           <Image
-            height={160}
-            width={32}
+            height={32}
+            width={160}
             src={"/images/arbitrum-logo.svg"}
             alt="Chain Logo"
             className="w-full"
           />
         </div>
       </section>
-      <section className="mx-auto border-b border-secondary-500 bg-primary-400 px-20 py-10">
-        <h3 className="text-4xl font-bold text-secondary-500">
-          True P2P Contract Signing
-        </h3>
+      <section className="mx-auto bg-secondary-500 px-20 py-14">
+        <h3 className="mb-6 text-5xl font-bold text-white">Features</h3>
+        <div className="mx-auto grid grid-cols-3 justify-around gap-4 px-10 text-white">
+          <div className="rounded-xl border border-white p-6">
+            <p className="mb-4 text-4xl">📃</p>
+            <p className="mb-4 text-xl">True P2P Contract Signing</p>
+            <p className="text-sm">
+              Using Lit Protocol and IPFS, we provide a true P2P contracting
+              service without the need for specific cloud services or storage.
+            </p>
+          </div>
+          <div className="rounded-xl border border-white p-6">
+            <p className="mb-4 text-4xl">💰</p>
+            <p className="mb-4 text-xl">Sign, no wallet and fees</p>
+            <p className="text-sm">
+              Technologies such as Biconomy and Privy eliminate the need for
+              signers to pay for wallets and Gas.
+            </p>
+          </div>
+          <div className="rounded-xl border border-white p-6">
+            <p className="mb-4 text-4xl">🌎</p>
+            <p className="mb-4 text-xl">Sybil Resistant by WorldID</p>
+            <p className="text-sm">
+              World ID proves that the contract issuer is a human being, making
+              it more sybil-resistant.
+            </p>
+          </div>
+        </div>
       </section>
-      <section className="mx-auto border-b border-secondary-500 bg-primary-400 px-20 py-10">
-        <h3 className="text-4xl font-bold text-secondary-500">
-          Signer doesn&apos;t need wallet & gas fee
+
+      <section className="mx-auto bg-white px-20 py-14">
+        <h3 className="mb-6 text-center text-5xl font-bold text-secondary-500">
+          Powered by
         </h3>
-      </section>
-      <section className="mx-auto border-b border-secondary-500 bg-primary-400 px-20 py-10">
-        <h3 className="text-4xl font-bold text-secondary-500">
-          Sybil Resistant by WorldID
-        </h3>
+        <div className="grid grid-cols-2 items-center justify-around gap-2 px-56">
+          <Image
+            height={32}
+            width={160}
+            src={"/images/lit-logo.svg"}
+            alt="Lit Logo"
+            className="w-full"
+          />
+          <Image
+            height={32}
+            width={160}
+            src={"/images/privy-logo.svg"}
+            alt="Privy Logo"
+            className="h-20 w-full object-contain"
+          />
+          <Image
+            height={32}
+            width={160}
+            src={"/images/biconomy-logo.png"}
+            alt="WorldCoin Logo"
+            className="w-full object-contain"
+          />
+          <Image
+            height={32}
+            width={160}
+            src={"/images/worldcoin-logo.png"}
+            alt="WorldCoin Logo"
+            className="w-full object-contain"
+          />
+        </div>
       </section>
     </main>
   );
