@@ -1,3 +1,6 @@
+import { ABI } from "@/constants";
+import { CONTRACT_ADDRESS } from "@/libs/viem";
+import { currentBiconomyApiKey, currentChainId } from "@/libs/biconomy";
 import { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
 import { encodeFunctionData } from "viem";
@@ -15,10 +18,6 @@ import {
   PaymasterMode,
 } from "@biconomy/paymaster";
 import { useWallets } from "@privy-io/react-auth";
-
-import { ABI } from "@/constants";
-import { CONTRACT_ADDRESS } from "@/libs/viem";
-import { currentChainId } from "@/libs/biconomy";
 
 type UseSignParams = {
   encryptedCid: string;
@@ -47,7 +46,7 @@ export const useSign = (params: UseSignParams) => {
 
       const paymaster: IHybridPaymaster<SponsorUserOperationDto> =
         new BiconomyPaymaster({
-          paymasterUrl: `https://paymaster.biconomy.io/api/v1/421613/${process.env.NEXT_PUBLIC_BICONOMY_PAYMASTER_API_KEY}`,
+          paymasterUrl: `https://paymaster.biconomy.io/api/v1/421613/${currentBiconomyApiKey}`,
         });
 
       const ownerShipModule = await ECDSAOwnershipValidationModule.create({
