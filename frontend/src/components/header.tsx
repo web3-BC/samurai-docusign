@@ -1,5 +1,6 @@
 "use client";
 
+import { Web3Button } from "@web3modal/react";
 import Link from "next/link";
 
 const Header = () => {
@@ -9,7 +10,9 @@ const Header = () => {
         <div className="text-xl font-medium">
           <Link href={"/"}>Samurai Sign</Link>
         </div>
-        <nav className="flex gap-6">{/* Web3Modal */}</nav>
+        <nav className="flex gap-6">
+          <Web3Button />
+        </nav>
       </div>
     </header>
   );
