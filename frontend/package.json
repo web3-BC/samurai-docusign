@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@biconomy/account": "3.1.0",
+    "@biconomy/bundler": "3.1.0",
+    "@biconomy/core-types": "3.1.0",
+    "@biconomy/modules": "3.1.0",
+    "@biconomy/paymaster": "3.1.0",
     "@lit-protocol/lit-node-client": "^2.2.54",
     "@lit-protocol/types": "^2.2.54",
     "@privy-io/react-auth": "^1.40.3",
@@ -30,6 +35,7 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-pdf": "^7.3.3",
+    "siwe": "^2.1.4",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
     "viem": "^1.12.1",

@@ -15,14 +15,8 @@ const config = {
   },
   reactStrictMode: true,
   experimental: {
-    appDir: true,
     turbo: {},
     serverActions: true,
-    // esmExternals: false,
-    // fallbackNodePolyfills: false,
-  },
-  future: {
-    webpack5: true,
   },
   images: {
     domains: ["ipfs.io"],
