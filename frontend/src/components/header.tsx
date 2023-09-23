@@ -13,7 +13,7 @@ const Header = () => {
         <div className="text-xl font-medium">
           <Link href={"/"}>Samurai Sign</Link>
         </div>
-        {pathname.startsWith("/signers") ? (
+        {pathname && pathname.startsWith("/signers") ? (
           <></>
         ) : (
           <nav className="flex gap-6">

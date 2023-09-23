@@ -1,5 +1,18 @@
 /** @type {import("next").NextConfig} */
 const config = {
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Credentials', value: 'true' },
+          { key: 'Access-Control-Allow-Origin', value: 'https://ipfs.io' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Accept, Accept-Version, Content-Length, Content-Type' },
+        ],
+      },
+    ]
+  },
   reactStrictMode: true,
   experimental: {
     turbo: {},
@@ -16,6 +29,9 @@ const config = {
       config.resolve.fallback.tls = false;
       config.resolve.fallback.child_process = false;
     }
+
+    config.resolve.alias.canvas = false
+    config.resolve.alias.encoding = false
 
     config.module = {
       ...config.module,
