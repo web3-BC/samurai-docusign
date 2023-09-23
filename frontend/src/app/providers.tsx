@@ -11,7 +11,7 @@ import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { SessionProvider } from "next-auth/react";
 import { polygonMumbai } from "viem/chains";
 import { Web3Modal } from "@web3modal/react";
-import { PrivyProvider, User } from "@privy-io/react-auth";
+import { PrivyProvider } from "@privy-io/react-auth";
 
 import { currentChain } from "@/libs/viem";
 
@@ -34,7 +34,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 
   const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
 
-  const handlePrivyOnSuccess = (user: User) => {
+  const handlePrivyOnSuccess = () => {
     const path = localStorage.getItem("recepientPath") || "";
     router.push(path);
   };
