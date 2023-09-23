@@ -22,17 +22,13 @@ const SignerPage = () => {
   const handleClickBtn = async () => {
     if (embeddedWallet) {
       const provider = await embeddedWallet.getEthereumProvider();
-      console.log('provider: ' + provider);
       const addr = embeddedWallet?.address;
-      console.log('addr: ' + addr);
       
       try{
         const {CID} = await decrypt(provider, addr, enCid, key);
         alert(CID);
-        console.log(CID);
       }catch(e){
         console.dir(e,  { depth: null });
-        alert(e)
       }
     }
   }

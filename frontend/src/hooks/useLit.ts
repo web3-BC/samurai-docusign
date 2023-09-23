@@ -31,7 +31,6 @@ export const useLit = () => {
     await connect();
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
-    console.log(authSig);
     
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(cid);
 
@@ -94,9 +93,6 @@ export const useLit = () => {
       address: address,
     };
 
-    console.log('authsig');
-    
-    console.log(authSig);
 
     const symmetricKey = await client.getEncryptionKey({
       accessControlConditions: ACCs,
@@ -104,9 +100,6 @@ export const useLit = () => {
       authSig,
       chain,
     });
-
-    console.log('symmetricKey:' + symmetricKey);
-    
 
     const encryptedCID = await LitJsSdk.base64StringToBlob(encryptedString);
 
