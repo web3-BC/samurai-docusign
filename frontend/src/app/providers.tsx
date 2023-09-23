@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import {
   EthereumClient,
@@ -10,6 +11,7 @@ import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { SessionProvider } from "next-auth/react";
 import { arbitrumGoerli } from "viem/chains";
 import { Web3Modal } from "@web3modal/react";
+import { PrivyProvider, User } from "@privy-io/react-auth";
 
 import { currentChain } from "@/libs/viem";
 
@@ -28,14 +30,39 @@ const wagmiConfig = createConfig({
 });
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+
+  const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID || "";
+
+  const handlePrivyOnSuccess = (user: User) => {
+    const path = localStorage.getItem("recepientPath") || "";
+    router.push(path);
+  };
+
   const ethereumClient = new EthereumClient(wagmiConfig, [currentChain]);
 
   return (
     <>
       <Toaster />
-      <SessionProvider>
-        <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
-      </SessionProvider>
+      <PrivyProvider
+        appId={PRIVY_APP_ID}
+        onSuccess={handlePrivyOnSuccess}
+        config={{
+          loginMethods: ["google", "email"],
+          appearance: {
+            theme: "light",
+            accentColor: "#676FFF",
+            logo: "",
+          },
+          embeddedWallets: {
+            createOnLogin: "users-without-wallets",
+          },
+        }}
+      >
+        <SessionProvider>
+          <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
+        </SessionProvider>
+      </PrivyProvider>
       <Web3Modal
         projectId={projectID}
         ethereumClient={ethereumClient}
