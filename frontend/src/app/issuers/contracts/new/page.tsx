@@ -37,6 +37,9 @@ const CreateContractPage = () => {
       const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
       console.log("encryptedCID:", encryptedCID);
       console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+      if (!encryptedCID || !encryptedSymmetricKey) {
+        return;
+      }
 
       const hashedEmail = hashEmail(email);
 
