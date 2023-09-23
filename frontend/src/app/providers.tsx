@@ -53,7 +53,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           appearance: {
             theme: "light",
             accentColor: "#676FFF",
-            logo: "",
           },
           embeddedWallets: {
             createOnLogin: "users-without-wallets",
