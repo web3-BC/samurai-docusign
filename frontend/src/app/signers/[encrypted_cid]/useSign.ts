@@ -11,8 +11,9 @@ export const useSign = (params: UseSignParams) => {
   const { createSmartAccount, executeContract } = useBiconomy();
 
   useEffect(() => {
+    console.log("createSmartAccount");
     createSmartAccount();
-  }, [createSmartAccount]);
+  }, []);
 
   const signContract = useCallback(async () => {
     await executeContract("signContract", [encryptedCid])
