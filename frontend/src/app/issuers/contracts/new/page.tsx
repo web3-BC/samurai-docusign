@@ -9,13 +9,13 @@ import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
-import { hashEmail } from "@/utils";
 import { createWalletClient, custom } from "viem";
 import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
 import { ABI } from "@/constants";
 import toast from "react-hot-toast";
 import Spinner from "@/components/spinner";
 import CopyURL from "@/components/copyUrl";
+import { hashEmail } from "@/app/utils";
 
 export enum Steps {
   VerifyHuman,
@@ -76,23 +76,6 @@ const CreateContractPage = () => {
     }
   };
 
-  const StepChanger = () => {
-    return (
-      <div>
-        <Button
-          text="back"
-          onClick={() => setCurrentStep(currentStep - 1)}
-          className=""
-        />
-        <Button
-          text="next"
-          onClick={() => setCurrentStep(currentStep + 1)}
-          className=""
-        />
-      </div>
-    );
-  };
-
   return (
     <main className="h-[calc(100vh-70px)] bg-slate-50 py-16">
       <div className="mx-auto w-[1200px]">
@@ -107,18 +90,21 @@ const CreateContractPage = () => {
                       signIn("worldcoin");
                     }}
                   />
-                  <StepChanger />
                 </div>
               );
             case Steps.FileUpload:
               return (
                 <FileUploader file={file} setFile={setFile}>
-                  <StepChanger />
+                  <Button
+                    text="Next"
+                    onClick={() => setCurrentStep(Steps.RegisterSinger)}
+                    className=""
+                  />
                 </FileUploader>
               );
             case Steps.RegisterSinger:
               return (
-                <div className="w-1/3">
+                <div className="mx-auto w-1/3">
                   <label
                     htmlFor="email"
                     className="mb-2 block font-medium text-gray-900 dark:text-white"
