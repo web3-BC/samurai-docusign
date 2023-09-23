@@ -1,7 +1,7 @@
 "use client";
 import { useLit } from "@/hooks/useLit";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const SignerPage = () => {
   const { login } = usePrivy();
@@ -11,15 +11,15 @@ const SignerPage = () => {
   const { decrypt } = useLit();
   const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
 
-  const handleChangeEnCid = (e: any) => {
+  const handleChangeEnCid = (e: ChangeEvent<HTMLInputElement>) => {
     setEnCid(e.target.value);
   };
 
-  const handleChangeKey = (e: any) => {
+  const handleChangeKey = (e: ChangeEvent<HTMLInputElement>) => {
     setKey(e.target.value);
   };
 
-  const handleClickBtn = async (e: any) => {
+  const handleClickBtn = async () => {
     if (embeddedWallet) {
       const provider = await embeddedWallet.getEthereumProvider();
       console.log('provider: ' + provider);
@@ -36,17 +36,6 @@ const SignerPage = () => {
       }
     }
   }
-
-  // useEffect(() => {
-  //   const getEOA = async () => {
-  //     const provider = await wallets[0]?.getEthersProvider();
-  //     const signer = provider?.getSigner();
-  //     if (!signer) {
-  //       throw new Error("Signer not found");
-  //     }
-  //   };
-  //   getEOA();
-  // }, [wallets]);
 
   return (
     <main className="mx-auto min-h-screen max-w-5xl pt-10">
