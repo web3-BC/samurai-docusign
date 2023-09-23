@@ -28,10 +28,11 @@ const CreateContractPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [encryptedCID, setEncryptedCID] = useState<string>("");
   const { status } = useSession()
-  if (status === "authenticated") {
-    toast.success("You are Human!")
-    setCurrentStep(Steps.FileUpload)
-  }
+  console.log(status)
+  // if (status === "authenticated") {
+  //   toast.success("You are Human!")
+  //   setCurrentStep(Steps.FileUpload)
+  // }
 
 
   const { upload } = useIPFS();
