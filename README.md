@@ -2,8 +2,6 @@
 
 A project for ETHGlobal New York 2023!
 
-## Project Abstract
-
 **Trustless** & **UX evolved** document signing dApp!!
 
 ✨ No censorship & control by App. True P2P contract signing
@@ -14,7 +12,9 @@ A project for ETHGlobal New York 2023!
 
 💎 Secure access control, encrypt & decrypt by Lit & IPFS.
 
-🌐 Multi-chain support! (Polygon zkEVM / Arbitrum One / Scroll Sepolia)
+🌐 Multi-chain support!
+
+## Project Abstract
 
 ### Contract address
 
