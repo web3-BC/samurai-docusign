@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import {
   EthereumClient,
