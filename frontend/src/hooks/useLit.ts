@@ -19,7 +19,7 @@ export const useLit = () => {
       standardContractType: "LitAction",
       chain: chain,
       method: "go",
-      parameters: ["40"],
+      parameters: ["100"],
       returnValueTest: {
         comparator: "=",
         value: "true",
@@ -31,6 +31,8 @@ export const useLit = () => {
     await connect();
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
+    console.log(authSig);
+    
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(cid);
 
     const encryptedSymmetricKey = await client.saveEncryptionKey({
@@ -60,12 +62,12 @@ export const useLit = () => {
     connect();
 
     const siweMessage = new SiweMessage({
-      domain: "localhost",
+      domain: "localhost:3000",
       address,
-      statement: "test",
+      statement: "",
       uri: "http://localhost:3000/signers/sign-in",
       version: "1",
-      chainId: 421613,
+      chainId: 1,
     });
 
     const wallet = createWalletClient({
@@ -92,12 +94,19 @@ export const useLit = () => {
       address: address,
     };
 
+    console.log('authsig');
+    
+    console.log(authSig);
+
     const symmetricKey = await client.getEncryptionKey({
       accessControlConditions: ACCs,
       toDecrypt: encryptedSymmetricKey,
       authSig,
       chain,
     });
+
+    console.log('symmetricKey:' + symmetricKey);
+    
 
     const encryptedCID = await LitJsSdk.base64StringToBlob(encryptedString);
 
