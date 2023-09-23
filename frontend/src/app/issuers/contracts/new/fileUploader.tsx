@@ -14,9 +14,10 @@ import PDFViewer from "@/components/pdfViewer";
 type FileUploaderProps = {
   file?: File;
   setFile: Dispatch<SetStateAction<File | undefined>>;
+  children: React.ReactNode;
 };
 
-const FileUploader = ({ file, setFile }: FileUploaderProps) => {
+const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
   const [fileUrl, setFileUrl] = useState<string>("");
 
   useEffect(() => {
@@ -99,13 +100,14 @@ const FileUploader = ({ file, setFile }: FileUploaderProps) => {
         {fileUrl && (
           <>
             <p className="mt-6">Selected 👉 {file?.name}</p>
+	    {children}
           </>
         )}
       </div>
       {fileUrl && (
-        <div>
-          <p>preview</p>
-          <PDFViewer file={file!} />
+        <div className="ml-32">
+          <p className="mb-4 text-lg">preview</p>
+          <PDFViewer file={file!} maxHeight="600px"/>
         </div>
       )}
     </div>
