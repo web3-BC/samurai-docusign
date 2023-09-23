@@ -9,26 +9,26 @@ export const useLit = () => {
     await client.connect();
   };
 
+  const ACCs: AccessControlConditions = [
+    {
+      contractAddress:
+        "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+      standardContractType: "LitAction",
+      chain: chain,
+      method: "go",
+      parameters: ["40"],
+      returnValueTest: {
+        comparator: "=",
+        value: "true",
+      },
+    },
+  ];
+
   const encrypt = async (cid: string) => {
     await connect();
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(cid);
-
-    const ACCs: AccessControlConditions = [
-      {
-        contractAddress:
-          "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
-        standardContractType: "LitAction",
-        chain: chain,
-        method: "go",
-        parameters: ["40"],
-        returnValueTest: {
-          comparator: "=",
-          value: "true",
-        },
-      },
-    ];
 
     const encryptedSymmetricKey = await client.saveEncryptionKey({
       accessControlConditions: ACCs,
@@ -45,6 +45,27 @@ export const useLit = () => {
         encryptedSymmetricKey,
         "base16",
       ),
+    };
+  };
+
+  const decrypt = async (encryptedString: string, encryptedSymmetricKey: string) => {
+    await connect();
+
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
+    const symmetricKey = await client.getEncryptionKey({
+      accessControlConditions: ACCs,
+      toDecrypt: encryptedSymmetricKey,
+      chain,
+      authSig
+    })
+
+    const decryptedString = await LitJsSdk.decryptString(
+      new Blob([encryptedString]),
+      symmetricKey
+    );
+
+    return {
+      decryptedCID: decryptedString,
     };
   };
 
