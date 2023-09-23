@@ -6,17 +6,21 @@ import Stepper from "./stepper";
 import { useIPFS } from "@/hooks/useIpfs";
 import { useLit } from "@/hooks/useLit";
 import Button from "@/components/button";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export enum Steps {
-  FileUpload = 1,
-  RegisterSinger,
   VerifyHuman,
+  FileUpload,
+  RegisterSinger,
   GetLink,
 }
 
-
 const CreateContractPage = () => {
-  const [currentStep, setCurrentStep] = useState<Steps>(Steps.FileUpload);
+  const searchParams = useSearchParams();
+  const queryStep = searchParams.get("step") || "0"
+  const initialStep = Number(queryStep);
+  const [currentStep, setCurrentStep] = useState<Steps>(initialStep);
   const [file, setFile] = useState<File>();
   const [email, setEmail] = useState<string>("");
 
@@ -55,6 +59,20 @@ const CreateContractPage = () => {
         <Stepper currentStep={currentStep} className="mb-8" />
         {(() => {
           switch (currentStep) {
+            case Steps.VerifyHuman:
+              return (
+                <div className="w-1/3">
+                  <Button
+                    text="Verify Human"
+                    onClick={() => {
+                      console.log("Verify Human");
+                      signIn("worldcoin")
+                    }}
+                    className="mb-2"
+                  />
+                  <StepChanger />
+                </div>
+              );
             case Steps.FileUpload:
               return (
                 <FileUploader file={file} setFile={setFile}>
@@ -81,8 +99,6 @@ const CreateContractPage = () => {
                   <StepChanger />
                 </div>
               );
-            case Steps.VerifyHuman:
-              return <div>VerifyHuman</div>;
             case Steps.GetLink:
               return <div>GetLink</div>;
             default:
