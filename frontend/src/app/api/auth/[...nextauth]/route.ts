@@ -26,15 +26,14 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token }) {
-      return token
+      return token;
     },
     async redirect({}) {
-      return "/issuers/contracts/new"
+      return "/issuers/contracts/new";
     },
     async signIn({}) {
-      return "/issuers/contracts/new"
-
-    }
+      return "/issuers/contracts/new";
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

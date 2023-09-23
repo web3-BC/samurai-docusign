@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import FileUploader from "./fileUploader";
 import Stepper from "./stepper";
 import { useIPFS } from "@/hooks/useIpfs";
@@ -8,6 +8,7 @@ import { useLit } from "@/hooks/useLit";
 import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import WorldCoinButton from "@/components/worldcoinButton";
 
 export enum Steps {
   VerifyHuman,
@@ -18,7 +19,7 @@ export enum Steps {
 
 const CreateContractPage = () => {
   const searchParams = useSearchParams();
-  const queryStep = searchParams.get("step") || "0"
+  const queryStep = searchParams.get("step") || "0";
   const initialStep = Number(queryStep);
   const [currentStep, setCurrentStep] = useState<Steps>(initialStep);
   const [file, setFile] = useState<File>();
@@ -62,13 +63,10 @@ const CreateContractPage = () => {
             case Steps.VerifyHuman:
               return (
                 <div className="w-1/3">
-                  <Button
-                    text="Verify Human"
+                  <WorldCoinButton
                     onClick={() => {
-                      console.log("Verify Human");
-                      signIn("worldcoin")
+                      signIn("worldcoin");
                     }}
-                    className="mb-2"
                   />
                   <StepChanger />
                 </div>
