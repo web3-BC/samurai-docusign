@@ -31,6 +31,7 @@ const CreateContractPage = () => {
   console.log(status)
   if (status === "authenticated") {
     toast.success("You are Human!")
+    setCurrentStep(Steps.FileUpload)
   }
 
 
