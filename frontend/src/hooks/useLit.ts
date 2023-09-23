@@ -69,5 +69,5 @@ export const useLit = () => {
     };
   };
 
-  return { encrypt };
+  return { encrypt, decrypt };
 };
