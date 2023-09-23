@@ -55,7 +55,7 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
   }, []);
 
   return (
-    <div className="mx-auto max-w-fit px-10 py-8 flex flex-row">
+    <div className="mx-auto flex max-w-fit flex-row px-10 py-8">
       <div>
         <p className="mb-8 text-center text-2xl">
           Drag & drop PDF file or Browse to get started
@@ -100,14 +100,14 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
         {fileUrl && (
           <>
             <p className="mt-6">Selected 👉 {file?.name}</p>
-	    {children}
+            {children}
           </>
         )}
       </div>
       {fileUrl && (
         <div className="ml-32">
           <p className="mb-4 text-lg">preview</p>
-          <PDFViewer file={file!}/>
+          <PDFViewer file={file!} className="max-h-[600px]" scale={0.8} />
         </div>
       )}
     </div>
