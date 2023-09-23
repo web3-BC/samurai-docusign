@@ -57,30 +57,29 @@ const FileUploader = () => {
       setIsLoading(true);
       try {
         const cid = await upload(file);
-        console.log(cid)
-        // const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
+        const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
 
-        // console.log("encryptedCID:", encryptedCID);
-        // console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+        console.log("encryptedCID:", encryptedCID);
+        console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
 
-        // const hashedEmail = hashEmail(email);
+        const hashedEmail = hashEmail(email);
 
-        // const walletClient = createWalletClient({
-        //   chain: currentChain,
-        //   transport: custom(window.ethereum),
-        // });
-        // const [account] = await walletClient.getAddresses();
+        const walletClient = createWalletClient({
+          chain: currentChain,
+          transport: custom(window.ethereum),
+        });
+        const [account] = await walletClient.getAddresses();
 
-        // const { request } = await publicClient.simulateContract({
-        //   account,
-        //   address: CONTRACT_ADDRESS,
-        //   abi: ABI,
-        //   functionName: "issueContract",
-        //   args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
-        // });
+        const { request } = await publicClient.simulateContract({
+          account,
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "issueContract",
+          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
+        });
 
-        // const txHash = await walletClient.writeContract(request);
-        // toast.success(`your tx has been sent: ${txHash}`);
+        const txHash = await walletClient.writeContract(request);
+        toast.success(`your tx has been sent: ${txHash}`);
       } catch (error) {
         toast.error(error as string);
       } finally {
