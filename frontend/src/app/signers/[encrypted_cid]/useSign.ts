@@ -1,3 +1,5 @@
+import { ABI } from "@/constants";
+import { CONTRACT_ADDRESS } from "@/libs/viem";
 import { currentChainId } from "@/libs/biconomy";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 import { IBundler, Bundler } from "@biconomy/bundler";
@@ -11,12 +13,22 @@ import {
   IHybridPaymaster,
   SponsorUserOperationDto,
   BiconomyPaymaster,
+  PaymasterMode,
 } from "@biconomy/paymaster";
 import { useWallets } from "@privy-io/react-auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import toast from "react-hot-toast";
+import { encodeFunctionData } from "viem";
 
-export const useSign = () => {
-  useState<IHybridPaymaster<SponsorUserOperationDto>>();
+type UseSignParams = {
+  encryptedCid: string;
+};
+
+export const useSign = (params: UseSignParams) => {
+  const { encryptedCid } = params;
+  const [biconomySA, setBiconomySA] = useState<BiconomySmartAccountV2>();
+  const [paymaster, setPaymaster] =
+    useState<IHybridPaymaster<SponsorUserOperationDto>>();
   const { wallets } = useWallets();
 
   useEffect(() => {
@@ -51,6 +63,9 @@ export const useSign = () => {
         paymaster: paymaster,
       });
 
+      setPaymaster(paymaster);
+      setBiconomySA(biconomySmartAccount);
+
       const smartAccountAddress =
         await biconomySmartAccount.getAccountAddress();
       console.log("Smart Account Address:", smartAccountAddress);
@@ -58,4 +73,46 @@ export const useSign = () => {
 
     createBiconomySmartAccount();
   }, [wallets]);
+
+  const signContract = useCallback(async () => {
+    if (!biconomySA || !paymaster) {
+      throw new Error("not found biconomy smart account or paymaster");
+    }
+
+    const data = encodeFunctionData({
+      abi: ABI,
+      functionName: "signContract",
+      args: [encryptedCid],
+    });
+    const tx = {
+      to: CONTRACT_ADDRESS,
+      data: data,
+    };
+    const partialUserOp = await biconomySA.buildUserOp([tx]);
+    const paymasterServiceData: SponsorUserOperationDto = {
+      mode: PaymasterMode.SPONSORED,
+    };
+    const paymasterAndDataResponse = await paymaster.getPaymasterAndData(
+      partialUserOp,
+      paymasterServiceData,
+    );
+    partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
+    const userOpResponse = await biconomySA.sendUserOp(partialUserOp);
+
+    await userOpResponse
+      .wait(1)
+      .then((transactionDetails) => {
+        toast.success("Complete Sign!!");
+        console.log(
+          "Complete Sign!! Transaction Receipt is:",
+          transactionDetails.receipt.transactionHash,
+        );
+      })
+      .catch((error) => {
+        toast.error("Error");
+        console.log("Error:", error);
+      });
+  }, [biconomySA, encryptedCid, paymaster]);
+
+  return { signContract };
 };
