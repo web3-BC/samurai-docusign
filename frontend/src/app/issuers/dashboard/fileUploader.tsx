@@ -44,10 +44,10 @@ const FileUploader = () => {
   const onChangeFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    // if (file?.type !== "application/pdf") {
-    //   toast("PDFs are only supported");
-    //   return;
-    // }
+    if (file?.type !== "application/pdf") {
+      toast("PDFs are only supported");
+      return;
+    }
 
     setFile(file);
   }, []);
