@@ -29,7 +29,7 @@ const CreateContractPage = () => {
   const [encryptedCID, setEncryptedCID] = useState<string>("");
   const { status } = useSession()
   console.log(status)
-  if (status === "authenticated") {
+  if (currentStep === Steps.VerifyHuman && status === "authenticated") {
     toast.success("You are Human!")
     setCurrentStep(Steps.FileUpload)
   }
