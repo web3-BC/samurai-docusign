@@ -21,12 +21,6 @@ const authOptions: NextAuthOptions = {
       },
     },
   ],
-  callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log(token, user, account, profile, isNewUser)
-      return token
-    }
-  },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
