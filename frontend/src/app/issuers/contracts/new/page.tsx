@@ -19,9 +19,6 @@ import { hashEmail } from "@/utils";
 import { Steps } from "./steps";
 
 const CreateContractPage = () => {
-  const { status } = useSession()
-  console.log("worldcoin auth status:", status)
-
   const searchParams = useSearchParams();
   const queryStep = searchParams?.get("step") || "0";
   const initialStep = Number(queryStep);
@@ -30,6 +27,12 @@ const CreateContractPage = () => {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [encryptedCID, setEncryptedCID] = useState<string>("");
+  const { status } = useSession()
+  if (status === "authenticated") {
+    toast.success("You are Human!")
+    setCurrentStep(Steps.FileUpload)
+  }
+
 
   const { upload } = useIPFS();
   const { encrypt } = useLit();
