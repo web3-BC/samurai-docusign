@@ -3,6 +3,7 @@ import * as LitJsSdk from "@lit-protocol/lit-node-client";
 export const client = new LitJsSdk.LitNodeClient({
   litNetwork: "serrano",
   alertWhenUnauthorized: false,
+  debug: false
 });
 export const chain = "ethereum";
 

@@ -8,7 +8,7 @@ export const useAuthRecipient = () => {
   const pathname = usePathname();
 
   if (ready && !authenticated) {
-    localStorage.setItem("recipientPath", pathname || "/");
+    localStorage.setItem("recepientPath", pathname || "/");
     router.push("/signers/sign-in");
   }
 

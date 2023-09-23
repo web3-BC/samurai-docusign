@@ -7,6 +7,7 @@ import { SiweMessage } from "siwe";
 import { AccessControlConditions, AuthSig } from "@lit-protocol/types";
 import { EIP1193Provider } from "@privy-io/react-auth";
 import { polygonMumbai } from "viem/chains";
+import { toast } from "react-hot-toast";
 
 export const useLit = () => {
   const connect = async () => {
@@ -19,7 +20,7 @@ export const useLit = () => {
       standardContractType: "LitAction",
       chain: chain,
       method: "go",
-      parameters: ["40"],
+      parameters: ["100"],
       returnValueTest: {
         comparator: "=",
         value: "true",
@@ -30,7 +31,15 @@ export const useLit = () => {
   const encrypt = async (cid: string) => {
     await connect();
 
+    // check if wallet is connected
+    if (localStorage.getItem("wagmi.connected") != "true") {
+      toast.error("Please connect wallet");
+      return { encryptedCID: "", encryptedSymmetricKey: "" };
+    }
+    localStorage.setItem("lit-web3-provider", "metamask");
+
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
+
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(cid);
 
     const encryptedSymmetricKey = await client.saveEncryptionKey({
@@ -57,13 +66,15 @@ export const useLit = () => {
     encryptedString: string,
     encryptedSymmetricKey: string,
   ) => {
+    connect();
+
     const siweMessage = new SiweMessage({
-      domain: "localhost",
+      domain: "localhost:3000",
       address,
-      statement: "test",
-      uri: "https://localhost:3000/signers/12",
+      statement: "",
+      uri: "http://localhost:3000/signers/sign-in",
       version: "1",
-      chainId: 421613,
+      chainId: 1,
     });
 
     const wallet = createWalletClient({

@@ -6,7 +6,7 @@ import Stepper from "./stepper";
 import { useIPFS } from "@/hooks/useIpfs";
 import { useLit } from "@/hooks/useLit";
 import Button from "@/components/button";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
 import { createWalletClient, custom } from "viem";
@@ -27,6 +27,13 @@ const CreateContractPage = () => {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [encryptedCID, setEncryptedCID] = useState<string>("");
+  const { status } = useSession()
+  console.log(status)
+  if (currentStep === Steps.VerifyHuman && status === "authenticated") {
+    toast.success("You are Human!")
+    setCurrentStep(Steps.FileUpload)
+  }
+
 
   const { upload } = useIPFS();
   const { encrypt } = useLit();
@@ -37,6 +44,9 @@ const CreateContractPage = () => {
       const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
       console.log("encryptedCID:", encryptedCID);
       console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+      if (!encryptedCID || !encryptedSymmetricKey) {
+        return;
+      }
 
       const hashedEmail = hashEmail(email);
 
