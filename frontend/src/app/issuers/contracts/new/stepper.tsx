@@ -10,7 +10,7 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
     <ol className={`flex w-full items-center text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base ${className || ""}`}>
       <li
         className={`${
-          currentStep >= Steps.VerifyHuman ? "text-blue-600 " : ""
+          currentStep >= Steps.VerifyHuman ? "text-secondary-500 " : ""
         }after:border-1 flex items-center after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-blue-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10`}
       >
         <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
@@ -32,7 +32,7 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
       </li>
       <li
         className={`${
-          currentStep >= Steps.FileUpload ? "text-blue-600 " : ""
+          currentStep >= Steps.FileUpload ? "text-secondary-500 " : ""
         }after:border-1 flex items-center after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 after:content-[''] dark:after:border-gray-700 sm:after:inline-block md:w-full xl:after:mx-10`}
       >
         <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
@@ -54,7 +54,7 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
       </li>
       <li
         className={`${
-          currentStep >= Steps.RegisterSinger ? "text-blue-600 " : ""
+          currentStep >= Steps.RegisterSinger ? "text-secondary-500 " : ""
         }after:border-1 flex items-center after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 after:content-[''] dark:after:border-gray-700 sm:after:inline-block md:w-full xl:after:mx-10`}
       >
         <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
@@ -76,7 +76,7 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
       </li>
       <li
         className={`${
-          currentStep >= Steps.GetLink ? "text-blue-600 " : ""
+          currentStep >= Steps.GetLink ? "text-secondary-500 " : ""
         }flex items-center`}
       >
         {currentStep > Steps.GetLink ? (
@@ -99,4 +99,3 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
 };
 
 export default Stepper;
-
