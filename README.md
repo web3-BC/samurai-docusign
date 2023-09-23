@@ -18,11 +18,12 @@ A project for ETHGlobal New York 2023!
 
 ### Contract address
 
-| Chain          | ChainId | contract address                           |
-| -------------- | ------- | ------------------------------------------ |
-| Polygon Mumbai | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
-| Scroll Sepolia | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
-| Arbitrum One   | 42161   |                                            |
+| Chain                 | ChainId | contract address                           |
+| --------------------- | ------- | ------------------------------------------ |
+| Polygon Mumbai        | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
+| Polygon zkEVM Testnet | 1442    |                                            |
+| Scroll Sepolia        | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
+| Arbitrum One          | 42161   |                                            |
 
 ### User experience flow
 
