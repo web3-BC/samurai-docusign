@@ -1,15 +1,15 @@
 import { usePrivy } from "@privy-io/react-auth";
 
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export const useAuthRecipient = () => {
   const { ready, authenticated, user, getAccessToken } = usePrivy();
-  const router = useRouter();
   const pathname = usePathname();
+  const { login } = usePrivy();
 
   if (ready && !authenticated) {
     localStorage.setItem("recipientPath", pathname || "/");
-    router.push("/signers/sign-in");
+    login()
   }
 
   return { user, getAccessToken };

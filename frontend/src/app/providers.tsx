@@ -36,7 +36,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 
   const handlePrivyOnSuccess = (user: User) => {
     console.log(user);
-    const path = localStorage.getItem("recepientPath") || "";
+    const path = localStorage.getItem("recipientPath") || "";
     router.push(path);
   };
 
