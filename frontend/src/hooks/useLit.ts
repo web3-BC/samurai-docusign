@@ -39,6 +39,7 @@ export const useLit = () => {
       symmetricKey,
       authSig,
       chain,
+      permanent: false,
     });
 
     const encryptedCID = await LitJsSdk.blobToBase64String(encryptedString);
@@ -59,6 +60,20 @@ export const useLit = () => {
     encryptedSymmetricKey: string,
   ) => {
     connect();
+
+    const ACCs: AccessControlConditions = [
+      {
+        contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "go",
+        parameters: ["120"],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
 
     const siweMessage = new SiweMessage({
       domain: "localhost:3000",
@@ -108,5 +123,87 @@ export const useLit = () => {
     return { CID };
   };
 
-  return { encrypt, decrypt };
+  const updateACCs = async(
+    provider: EIP1193Provider,
+    address: string,
+    encryptedSymmetricKey: string) => {
+
+    connect();
+
+    const siweMessage = new SiweMessage({
+      domain: "localhost:3000",
+      address,
+      statement: "",
+      uri: "http://localhost:3000/signers/sign-in",
+      version: "1",
+      chainId: 1,
+    });
+
+    const wallet = createWalletClient({
+      chain: polygonMumbai,
+      transport: custom(provider),
+    });
+
+    const messageToSign = siweMessage.prepareMessage();
+
+    const [account] = await wallet.getAddresses();
+    if (!account) {
+      throw Error("account not found");
+    }
+
+    const signature = await wallet.signMessage({
+      account: account,
+      message: messageToSign,
+    });
+
+    const authSig: AuthSig = {
+      sig: signature,
+      derivedVia: "web3.eth.personal.sign",
+      signedMessage: messageToSign,
+      address: address,
+    };
+
+    const newAccessControlConditions: AccessControlConditions = [
+      {
+        contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "go",
+        parameters: ["120"],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
+
+    const symmetricKey = await client.getEncryptionKey({
+      accessControlConditions: ACCs,
+      toDecrypt: encryptedSymmetricKey,
+      authSig,
+      chain,
+    });
+
+    const newEncryptedSymmetricKey = await client.saveEncryptionKey({
+      accessControlConditions: newAccessControlConditions,
+      symmetricKey,
+      authSig,
+      chain,
+      permanent: false,
+    });
+
+    console.log(newEncryptedSymmetricKey);
+    alert(newEncryptedSymmetricKey);
+    console.log(LitJsSdk.uint8arrayToString(
+      newEncryptedSymmetricKey,
+      "base16",
+    ));
+    alert(LitJsSdk.uint8arrayToString(
+      newEncryptedSymmetricKey,
+      "base16",
+    ));
+    return {newEncryptedSymmetricKey}
+  }
+
+  return { encrypt, decrypt, updateACCs };
 };

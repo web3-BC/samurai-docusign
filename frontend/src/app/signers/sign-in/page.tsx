@@ -8,7 +8,7 @@ const SignerPage = () => {
   const { wallets } = useWallets();
   const [enCid, setEnCid] = useState('');
   const [key, setKey] = useState('');
-  const { decrypt } = useLit();
+  const { decrypt, updateACCs } = useLit();
   const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
 
   const handleChangeEnCid = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +27,7 @@ const SignerPage = () => {
       try{
         const {CID} = await decrypt(provider, addr, enCid, key);
         alert(CID);
+        // const {newEncryptedSymmetricKey} = await updateACCs(provider, addr, key);
       }catch(e){
         console.dir(e,  { depth: null });
       }
