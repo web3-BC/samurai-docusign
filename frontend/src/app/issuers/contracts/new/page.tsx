@@ -9,6 +9,13 @@ import Button from "@/components/button";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
+import { hashEmail } from "@/utils";
+import { createWalletClient, custom } from "viem";
+import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
+import { ABI } from "@/constants";
+import toast from "react-hot-toast";
+import Spinner from "@/components/spinner";
+import CopyURL from "@/components/copyUrl";
 
 export enum Steps {
   VerifyHuman,
@@ -24,16 +31,48 @@ const CreateContractPage = () => {
   const [currentStep, setCurrentStep] = useState<Steps>(initialStep);
   const [file, setFile] = useState<File>();
   const [email, setEmail] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [encryptedCID, setEncryptedCID] = useState<string>("");
 
   const { upload } = useIPFS();
   const { encrypt } = useLit();
-  const onClickUpload = async () => {
+  const onClickIssueContract = async () => {
     if (file) {
       const cid = await upload(file);
 
       const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
       console.log("encryptedCID:", encryptedCID);
       console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+
+      const hashedEmail = hashEmail(email);
+
+      const walletClient = createWalletClient({
+        chain: currentChain,
+        transport: custom(window.ethereum),
+      });
+      const [account] = await walletClient.getAddresses();
+
+      try {
+        const { request } = await publicClient.simulateContract({
+          account,
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "issueContract",
+          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
+        });
+        const result = await walletClient.writeContract(request);
+        console.log({ result });
+      } catch (error) {
+        toast.error(error as string);
+        setIsLoading(false);
+        return;
+      }
+
+      setEncryptedCID(encryptedCID);
+      setIsLoading(false);
+      setCurrentStep(Steps.GetLink);
+    } else {
+      toast.error("input is invalid");
     }
   };
 
@@ -91,14 +130,41 @@ const CreateContractPage = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    className="mb-8 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     required
                   />
-                  <StepChanger />
+                  <div className="flex flex-row justify-between">
+                    <Button
+                      text="Back"
+                      onClick={() => setCurrentStep(Steps.FileUpload)}
+                      className=""
+                    />
+                    <Button
+                      text="Create Contract"
+                      onClick={() => {
+                        console.log("Create Contract");
+                        onClickIssueContract();
+                      }}
+                      className=""
+                    />
+                  </div>
                 </div>
               );
             case Steps.GetLink:
-              return <div>GetLink</div>;
+              return (
+                <div className="mx-auto w-1/3">
+                  {isLoading ? (
+                    <Spinner />
+                  ) : (
+                    <>
+                      <p>Create contract succeeded!</p>
+                      <img src="/success-icon.png" className="w-2/4" />
+                      <p>Click url to copy!</p>
+                      <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
+                    </>
+                  )}
+                </div>
+              );
             default:
               return null;
           }

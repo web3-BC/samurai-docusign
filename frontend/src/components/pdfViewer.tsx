@@ -12,11 +12,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_SOURCE;
 
 type PDFViewerProps = {
   file: string | File;
-  maxHeight?: string;
   className?: string;
 };
 
-const PDFViewer = ({ file, maxHeight, className }: PDFViewerProps) => {
+const PDFViewer = ({ file, className }: PDFViewerProps) => {
   const [pageNum, setPageNum] = useState<number>(0);
   const onLoadError = (e: Error): void => {
     console.error("react-pdf load error", e.message);
@@ -32,7 +31,7 @@ const PDFViewer = ({ file, maxHeight, className }: PDFViewerProps) => {
       onLoadError={onLoadError}
       onLoadSuccess={onLoadSucess}
       renderMode="canvas"
-      className={`max-h-[${maxHeight || "720px"}] overflow-y-scroll ${className || ""}}`}
+      className={`max-h-[600px] overflow-y-scroll ${className || ""}}`}
     >
       {Array.from(new Array(pageNum), (_, index) => (
         <Page
