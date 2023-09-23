@@ -11,8 +11,7 @@ export const useLit = () => {
 
   const ACCs: AccessControlConditions = [
     {
-      contractAddress:
-        "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
+      contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
       standardContractType: "LitAction",
       chain: chain,
       method: "go",
@@ -48,7 +47,10 @@ export const useLit = () => {
     };
   };
 
-  const decrypt = async (encryptedString: string, encryptedSymmetricKey: string) => {
+  const decrypt = async (
+    encryptedString: string,
+    encryptedSymmetricKey: string,
+  ) => {
     await connect();
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
@@ -56,12 +58,12 @@ export const useLit = () => {
       accessControlConditions: ACCs,
       toDecrypt: encryptedSymmetricKey,
       chain,
-      authSig
-    })
+      authSig,
+    });
 
     const decryptedString = await LitJsSdk.decryptString(
       new Blob([encryptedString]),
-      symmetricKey
+      symmetricKey,
     );
 
     return {
@@ -69,5 +71,5 @@ export const useLit = () => {
     };
   };
 
-  return { encrypt };
+  return { encrypt, decrypt };
 };
