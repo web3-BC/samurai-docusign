@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useIPFS } from "@/hooks/useIpfs";
 import Spinner from "@/components/spinner";
 import { useLit } from "@/hooks/useLit";
-import { hashEmail } from "@/app/utils";
+import { hashEmail } from "@/utils";
 import { createWalletClient, custom } from "viem";
 import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
 import { ABI } from "@/constants";
