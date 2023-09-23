@@ -1,17 +1,22 @@
 "use client";
 
 import Button from "@/components/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthRecipient } from "@/hooks/useAuthRecipient";
 import { getEmailFromUserId, getUserIdFromJwt } from "@/libs/privy";
+import { useWallets } from "@privy-io/react-auth";
 import PDFViewer from "@/components/pdfViewer";
-
-const decryptCid = (enCid: string) => {
-  return enCid;
-};
+import { useLit } from "@/hooks/useLit";
 
 const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const { user, getAccessToken } = useAuthRecipient();
+  const { decrypt } = useLit();
+  const { wallets } = useWallets();
+  const [ CID, setCID ] = useState<string>("");
+
+  const embeddedWallet = wallets.find(
+    (wallet) => wallet.walletClientType === "privy",
+  );
 
   useEffect(() => {
     const effect = async () => {
@@ -29,9 +34,26 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
     void effect();
   }, [user, getAccessToken]);
-  const cid = decryptCid(params.encrypted_cid);
 
-  const url = `https://ipfs.io/ipfs/${cid}`;
+  useEffect(() => {
+    const effect = async () => {
+      if (embeddedWallet) {
+        const provider = await embeddedWallet.getEthereumProvider();
+        const addr = embeddedWallet?.address;
+
+        const symmetrickKey = "" // TODO
+
+        try {
+          setCID(await decrypt(provider, addr, params.encrypted_cid, symmetrickKey))
+        } catch (e) {
+          console.dir(e, { depth: null });
+        }
+      }
+    };
+    void effect();
+  }, []);
+
+  const url = `https://ipfs.io/ipfs/${CID}`;
   return (
     <main className="h-[calc(100vh-70px)] bg-slate-50 py-16">
       <div className="mx-auto flex h-full w-3/4 flex-row justify-around">
