@@ -15,18 +15,12 @@ import { ABI } from "@/constants";
 import toast from "react-hot-toast";
 import Spinner from "@/components/spinner";
 import CopyURL from "@/components/copyUrl";
-import { hashEmail } from "@/app/utils";
-
-export enum Steps {
-  VerifyHuman,
-  FileUpload,
-  RegisterSinger,
-  GetLink,
-}
+import { hashEmail } from "@/utils";
+import { Steps } from "./steps";
 
 const CreateContractPage = () => {
   const searchParams = useSearchParams();
-  const queryStep = searchParams.get("step") || "0";
+  const queryStep = searchParams?.get("step") || "0";
   const initialStep = Number(queryStep);
   const [currentStep, setCurrentStep] = useState<Steps>(initialStep);
   const [file, setFile] = useState<File>();

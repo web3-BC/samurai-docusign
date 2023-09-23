@@ -1,4 +1,4 @@
-import { Steps } from "./page";
+import { Steps } from "./steps";
 
 type StepperProps = {
   currentStep: Steps;
