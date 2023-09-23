@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useIPFS } from "@/hooks/useIpfs";
-
 import Spinner from "@/components/spinner";
 import { useLit } from "@/hooks/useLit";
 import { hashEmail } from "@/app/utils";
