@@ -1,22 +1,23 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Button from "@/components/button";
+import { useRouter } from "next/navigation";
 
-const Home = () => {
+const LandingPage = () => {
+  const router = useRouter()
   const button = {
-    text: "Sign in with WorldCoin",
+    text: "Create New Contract",
     className: "",
-    onClick: async () => {
-      await signIn("worldcoin");
+    onClick: () => {
+      router.push("/issuers/contracts/new")
     },
   };
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl items-center justify-center pt-10">
+    <main className="h-[calc(100vh-70px)] bg-slate-50 py-16 mx-auto flex w-full items-center justify-center pt-10">
       <Button {...button} />
     </main>
   );
 };
 
-export default Home;
+export default LandingPage;
