@@ -6,7 +6,7 @@ import Stepper from "./stepper";
 import { useIPFS } from "@/hooks/useIpfs";
 import { useLit } from "@/hooks/useLit";
 import Button from "@/components/button";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
 import { createWalletClient, custom } from "viem";
@@ -19,6 +19,9 @@ import { hashEmail } from "@/utils";
 import { Steps } from "./steps";
 
 const CreateContractPage = () => {
+  const { status } = useSession()
+  console.log("worldcoin auth status:", status)
+
   const searchParams = useSearchParams();
   const queryStep = searchParams?.get("step") || "0";
   const initialStep = Number(queryStep);
