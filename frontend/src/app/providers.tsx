@@ -9,7 +9,7 @@ import {
 } from "@web3modal/ethereum";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { SessionProvider } from "next-auth/react";
-import { arbitrumGoerli } from "viem/chains";
+import { polygonMumbai } from "viem/chains";
 import { Web3Modal } from "@web3modal/react";
 import { PrivyProvider, User } from "@privy-io/react-auth";
 
@@ -66,7 +66,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <Web3Modal
         projectId={projectID}
         ethereumClient={ethereumClient}
-        defaultChain={arbitrumGoerli}
+        defaultChain={polygonMumbai}
       />
     </>
   );

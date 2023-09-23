@@ -62,6 +62,9 @@ dependencies:
   react-hot-toast:
     specifier: ^2.4.1
     version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
+  siwe:
+    specifier: ^2.1.4
+    version: 2.1.4(ethers@5.7.2)
   tailwindcss:
     specifier: 3.3.3
     version: 3.3.3
