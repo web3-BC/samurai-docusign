@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useIPFS } from "@/hooks/useIpfs";
 
 import Spinner from "@/components/spinner";
+import { useLit } from "@/hooks/useLit";
 
 const FileUploader = () => {
   const [file, setFile] = useState<File>();
@@ -12,6 +13,7 @@ const FileUploader = () => {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const { upload } = useIPFS();
+  const { encrypt } = useLit();
 
   useEffect(() => {
     let fileReader: FileReader;
@@ -52,8 +54,12 @@ const FileUploader = () => {
       setIsLoading(true);
       const cid = await upload(file);
       alert(cid);
+      const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
+      console.log("encryptedCID:", encryptedCID);
+      console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
       try {
         // issue contract documents
+        
 
       } catch (error) {
         toast.error(error as string);
