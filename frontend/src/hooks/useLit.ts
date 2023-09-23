@@ -104,5 +104,5 @@ export const useLit = () => {
     return { CID };
   };
 
-  return { encrypt };
+  return { encrypt, decrypt };
 };
