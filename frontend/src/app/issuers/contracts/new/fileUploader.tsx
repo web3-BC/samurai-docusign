@@ -55,11 +55,11 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
   }, []);
 
   return (
-    <div className="mx-auto flex max-w-fit flex-row px-10 py-8">
-      <div>
-        <p className="mb-8 text-center text-2xl">
-          Drag & drop PDF file or Browse to get started
-        </p>
+    <div className="mx-auto flex justify-around flex-row px-10 pb-8">
+      <div className="w-1/2">
+        <h3 className="mb-8 text-center text-2xl font-bold">
+          Upload your Contract
+        </h3>
         <div className="flex w-full items-center justify-center">
           <label
             htmlFor="dropzone-file"
@@ -99,15 +99,15 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
         </div>
         {fileUrl && (
           <>
-            <p className="mt-6">Selected 👉 {file?.name}</p>
+            <p className="my-6">Selected 👉 {file?.name}</p>
             {children}
           </>
         )}
       </div>
       {fileUrl && (
         <div className="ml-32">
-          <p className="mb-4 text-lg">preview</p>
-          <PDFViewer file={file!} className="max-h-[600px]" scale={0.8} />
+          <p className="mb-4 text-2xl">Preview 👁️</p>
+          <PDFViewer file={file!} />
         </div>
       )}
     </div>

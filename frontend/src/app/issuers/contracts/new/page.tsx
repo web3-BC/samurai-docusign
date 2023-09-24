@@ -17,6 +17,7 @@ import Spinner from "@/components/spinner";
 import CopyURL from "@/components/copyUrl";
 import { hashEmail } from "@/utils";
 import { Steps } from "./steps";
+import Image from "next/image";
 
 const CreateContractPage = () => {
   const searchParams = useSearchParams();
@@ -27,13 +28,12 @@ const CreateContractPage = () => {
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [encryptedCID, setEncryptedCID] = useState<string>("");
-  const { status } = useSession()
-  console.log(status)
+  const { status } = useSession();
+  console.log(status);
   if (currentStep === Steps.VerifyHuman && status === "authenticated") {
-    toast.success("You are Human!")
-    setCurrentStep(Steps.FileUpload)
+    toast.success("You are Human!");
+    setCurrentStep(Steps.FileUpload);
   }
-
 
   const { upload } = useIPFS();
   const { encrypt } = useLit();
@@ -88,7 +88,10 @@ const CreateContractPage = () => {
           switch (currentStep) {
             case Steps.VerifyHuman:
               return (
-                <div className="w-1/3">
+                <div className="mx-auto w-2/3">
+                  <h3 className="mb-8 text-center text-3xl font-bold">
+                    Verify with Worldcoin
+                  </h3>
                   <WorldCoinButton
                     onClick={() => {
                       signIn("worldcoin");
@@ -109,6 +112,9 @@ const CreateContractPage = () => {
             case Steps.RegisterSinger:
               return (
                 <div className="mx-auto w-1/3">
+                  <h3 className="mb-8 text-center text-3xl font-bold">
+                    Register signer email address
+                  </h3>
                   <label
                     htmlFor="email"
                     className="mb-2 block font-medium text-gray-900 dark:text-white"
@@ -147,8 +153,17 @@ const CreateContractPage = () => {
                     <Spinner />
                   ) : (
                     <>
-                      <p>Create contract succeeded!</p>
-                      <img src="/success-icon.png" className="w-2/4" />
+                      <h3 className="mb-8 text-center text-3xl font-bold">
+                        Create contract succeeded!🎉
+                      </h3>
+
+                      <Image
+                        width={100}
+                        height={100}
+                        alt="Success Icon"
+                        src="/success-icon.png"
+                        className="mx-auto w-2/4"
+                      />
                       <p>Click url to copy!</p>
                       <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
                     </>
