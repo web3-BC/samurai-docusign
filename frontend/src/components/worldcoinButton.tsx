@@ -2,7 +2,7 @@ const WorldCoinButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       onClick={onClick}
-      className="flex rounded-xl bg-black px-3.5 py-2.5 text-sm text-white"
+      className="mx-auto flex rounded-xl bg-black px-3.5 py-2.5 text-sm text-white"
     >
       <svg
         className="mr-2"
@@ -41,7 +41,7 @@ const WorldCoinButton = ({ onClick }: { onClick: () => void }) => {
           fill="currentColor"
         ></path>
       </svg>
-      Verify with Worldcoin
+      Verify
     </button>
   );
 };
