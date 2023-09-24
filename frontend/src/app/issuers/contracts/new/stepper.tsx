@@ -71,7 +71,7 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
           ) : (
             <span className="mr-2">3</span>
           )}
-          Regsiter <span className="hidden sm:ml-2 sm:inline-flex">Signer</span>
+          Register <span className="hidden sm:ml-2 sm:inline-flex">Signer</span>
         </span>
       </li>
       <li
