@@ -15,6 +15,7 @@ export const RPC_LIST = {
         .NEXT_PUBLIC_ALCHEMY_API_KEY!}`,
     ),
   ],
+  gnosisChiado: [http(), http("https://rpc.chiado.gnosis.gateway.fm")],
 };
 
 export const PDFJS_WORKER_SOURCE =
