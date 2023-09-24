@@ -52,7 +52,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
         const { encryptedSymmetricKey } = await getContractByEncryptedCid(params.encrypted_cid);
         try {
           console.log('encryptedSymmetricKey:' + encryptedSymmetricKey);
-          console.log('cid: ' + params.encrypted_cid)
+          console.log('enCid: ' + params.encrypted_cid)
 
           const {newEncryptedSymmetricKeyStr} = await updateACCs(
             provider,
