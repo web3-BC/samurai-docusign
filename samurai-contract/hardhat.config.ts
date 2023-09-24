@@ -29,6 +29,11 @@ const config: HardhatUserConfig = {
       accounts: [`0x${process.env.PRIVATE_KEY}`],
       allowUnlimitedContractSize: true,
     },
+    gnosis: {
+      url: `${process.env.GNOSIS_TESTNET_URL}`,
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      allowUnlimitedContractSize: true,
+    },
     scrollSepoila: {
       url: "https://1rpc.io/scroll/sepolia",
       accounts: [`0x${process.env.PRIVATE_KEY}`],
