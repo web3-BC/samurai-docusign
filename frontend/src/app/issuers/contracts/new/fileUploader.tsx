@@ -55,7 +55,7 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
   }, []);
 
   return (
-    <div className="mx-auto flex justify-around flex-row px-10 pb-8">
+    <div className="mx-auto flex justify-around flex-row px-10">
       <div className="w-1/2">
         <h3 className="mb-8 text-center text-2xl font-bold">
           Upload your Contract
