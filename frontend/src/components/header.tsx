@@ -3,6 +3,7 @@
 import { Web3Button } from "@web3modal/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Header = () => {
   const pathname = usePathname();
@@ -12,15 +13,22 @@ const Header = () => {
   if (pathname === "/") return <></>;
 
   return (
-    <header className="shadow shadow-b-lg z-10 h-[70px] w-full py-3">
+    <header className="shadow-b-lg z-10 h-[70px] w-full py-3 shadow">
       <div className="mx-auto flex h-full max-w-5xl items-center justify-between text-gray-950">
         <div className="text-2xl font-bold">
-          <Link href={"/"}>Samurai Sign</Link>
+          <Link href={"/"}>
+            <Image
+              height={28}
+              width={250}
+              src={"/images/samurai.svg"}
+              alt="Lit Logo"
+            />
+          </Link>
         </div>
         {pathname.startsWith("/issuers") ? (
-          <nav className="flex gap-6">
+          <div className="ml-auto pr-14">
             <Web3Button />
-          </nav>
+          </div>
         ) : (
           <></>
         )}

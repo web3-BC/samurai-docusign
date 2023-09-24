@@ -1,5 +1,5 @@
 import { ABI } from "@/constants";
-import { currentChainId, currentBiconomyApiKey } from "@/libs/biconomy";
+import { defaultChainId, defaultBiconomyApiKey } from "@/libs/biconomy";
 import { CONTRACT_ADDRESS } from "@/libs/viem";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 import { IBundler, Bundler } from "@biconomy/bundler";
@@ -35,7 +35,7 @@ export const useBiconomy = () => {
 
     const biconomySmartAccount = await BiconomySmartAccountV2.create({
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      chainId: currentChainId,
+      chainId: defaultChainId,
       defaultValidationModule: ownerShipModule,
     });
 
@@ -49,15 +49,15 @@ export const useBiconomy = () => {
       args: Array<unknown>,
     ) => {
       const bundler: IBundler = new Bundler({
-        chainId: currentChainId,
-        bundlerUrl: `https://bundler.biconomy.io/api/v2/${currentChainId}/${process.env.NEXT_PUBLIC_BICONOMY_BUNDLER_API_KEY}`,
+        chainId: defaultChainId,
+        bundlerUrl: `https://bundler.biconomy.io/api/v2/${defaultChainId}/${process.env.NEXT_PUBLIC_BICONOMY_BUNDLER_API_KEY}`,
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
       });
       biconomySmartAccount.bundler = bundler;
 
       const paymaster: IHybridPaymaster<SponsorUserOperationDto> =
         new BiconomyPaymaster({
-          paymasterUrl: `https://paymaster.biconomy.io/api/v1/421613/${currentBiconomyApiKey}`,
+          paymasterUrl: `https://paymaster.biconomy.io/api/v1/421613/${defaultBiconomyApiKey}`,
         });
       biconomySmartAccount.paymaster = paymaster;
 

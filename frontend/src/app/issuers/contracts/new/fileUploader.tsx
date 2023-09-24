@@ -106,8 +106,8 @@ const FileUploader = ({ file, setFile, children }: FileUploaderProps) => {
       </div>
       {fileUrl && (
         <div className="ml-32">
-          <p className="mb-4 text-2xl">Preview 👁️</p>
-          <PDFViewer file={file!} />
+          <p className="mb-4 text-2xl font-bold">Preview 👁️</p>
+          <PDFViewer file={file!} className="max-h-[660px]" />
         </div>
       )}
     </div>

@@ -24,7 +24,7 @@ Project main goals are
 
 Contract Issuer connects wallet, upload PDF contract document to IPFS and verifies he/she is a human. This means, no controls & trust for us and providing meaningful contract because only legit human can issue the document. Issuers obtain evidence that they issued secure contract on-chain by approving transactions and the state are held on smart contract.
 
-Contract signers don't need wallet & gas fees. They only have to social login and sign the document. We verify the signer logged in with the expected email(Google) that the signer allowed. Peer-to-Peer access control for the contract document and easy UX.
+Contract signers don't need wallet & gas fees. They only have to social login and sign the document. We verify the signer logged in with the expected email that the signer allowed. Peer-to-Peer access control for the contract document and easy UX.
 
 ### Contract address
 
@@ -40,7 +40,7 @@ Issuer:
 
 1. Connect Wallet
 2. Upload the contract document(PDF)
-3. Specify the signer's Gmail
+3. Specify the signer's email
 4. Verify with WorldID
 5. Execute smart contract(`issueContract`)
 6. Copy the URL and send it to the signer
@@ -48,7 +48,7 @@ Issuer:
 Signer:
 
 1. Access to the URL
-2. Social Login(Google)
+2. Social Login(Google / email)
 3. View the contract document
 4. Sign it
 
@@ -63,17 +63,17 @@ Signer:
 
 1. Connect wallet
 2. Verify issuer is a legit human with Worldcoin
-3. Specify the signer by providing the signer's Gmail
+3. Specify the signer by providing the signer's email
 4. Upload contract document(PDF) to IPFS
 5. Encrypt the CID with Lit SDK
 6. Write (encryptedCID, hashedEmail, encryptedSymmetricKey) on smart contract
 
 ### Signer tech flow
 
-1. Social Login with Google
+1. Social Login with Google / email
 2. Create EOA with Privy
 3. Create SCW(Smart Account) with Biconomy SDK
-4. Verify the signer has a expected Gmail with LitAction
+4. Verify the signer has a expected email with LitAction
 5. Decrypt the `encryptedCID` and get document CID
 6. View the contract document with CID
 7. Sign with Gasless tx by Biconomy SDK
