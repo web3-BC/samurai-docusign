@@ -82,6 +82,34 @@ Signer:
 6. View the contract document with CID
 7. Sign with Gasless tx by Biconomy SDK
 
+### How we access control?
+
+![issuer ACC](./public/issuer-acc.png)
+
+Issuer side is pretty simple.
+
+1. Issuer upload contract document to IPFS and get CID
+2. Issuer Encrpts the CID with Lit SDK and get `encryptedCID` and `encryptedSymmetricKey`
+3. Issuer hashes the signer's email provided and get `hashedEmail`
+4. Issuer set Access-Control-Condition on LitAction like:
+
+```
+if this `hashedEmail` matches the signed-in user's hashedEmail, he/she has to be the signer and enable to view & sign the contract
+```
+
+5. write on smart contract (encryptedCID, hashedEmail, encryptedSymmetricKey)
+
+![signer ACC](./public/signer-acc.png)
+
+Signer side is a little complicated
+
+1. Signer signin with email / google and get JWT toekn from Privy
+2. Signer passes (JWT token, `encryptedCID` \*on URL path parameter)
+3. Inside of Lit Action, the code recovers user's email from JWT by PrivyAPI, hashes the email, compare if current hashedEmail matches `hashedEmail` on smart contract.
+4. If Lit Action Condition return true, the signer can decrypt `encryptedCID` and recover CID.
+
+This architecture enables trustless & secure P2P access control.
+
 ### UX optimization with AA
 
 ![AA strategy](./public/AAstrategy.png)
@@ -90,6 +118,6 @@ We optimizes UX by combining Social Login + EOA creation and Biconomy SDK v2 Sma
 
 Signers can signin with Google / Email on this app and hold EOA, this system is enabled by Privy for Authentication and EOA creation. And before user execute transactions, we provide ERC4337 wallet with paymaster by Biconomy SDK v2. Then users can execute transactions without gasfees and bad signing UX.
 
-### Sequence
+### System Sequence
 
 ![technical architecture](./public//architecture.png)
