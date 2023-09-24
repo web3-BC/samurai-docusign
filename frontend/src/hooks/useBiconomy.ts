@@ -1,4 +1,5 @@
-import { ABI } from "@/constants";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ABI, Functions } from "@/constants";
 import { defaultChainId, defaultBiconomyApiKey } from "@/libs/biconomy";
 import { CONTRACT_ADDRESS } from "@/libs/viem";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
@@ -45,8 +46,8 @@ export const useBiconomy = () => {
   const executeContract = useCallback(
     async (
       biconomySmartAccount: BiconomySmartAccountV2,
-      functionName: string,
-      args: Array<unknown>,
+      functionName: Functions,
+      args: any,
     ) => {
       const bundler: IBundler = new Bundler({
         chainId: defaultChainId,

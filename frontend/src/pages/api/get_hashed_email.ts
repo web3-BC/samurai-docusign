@@ -12,14 +12,14 @@ export default async function handler(
     }
 
     const encryptedCid = req.query.enCid as string;
-    const hashedEmail = await publicClient.readContract({
+    const contract = await publicClient.readContract({
       address: CONTRACT_ADDRESS,
       abi: ABI,
-      functionName: "getHashedEmail",
+      functionName: "getContractByEncryptedCid",
       args: [encryptedCid],
     });
 
-    return res.json({ hashedEmail });
+    return res.json({ hashedEmail: contract.hashedEmail });
   } catch (err) {
     console.error(err);
     return res.status(500).send(err);
