@@ -56,6 +56,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           },
           embeddedWallets: {
             createOnLogin: "users-without-wallets",
+            noPromptOnSignature: true,
           },
         }}
       >
