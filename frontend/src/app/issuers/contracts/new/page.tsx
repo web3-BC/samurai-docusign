@@ -42,12 +42,12 @@ const CreateContractPage = () => {
     if (file) {
       const cid = await upload(file);
 
-      const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
-      console.log("encryptedCID:", encryptedCID);
-      console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
-      if (!encryptedCID || !encryptedSymmetricKey) {
-        return;
-      }
+      // const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
+      // console.log("encryptedCID:", encryptedCID);
+      // console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+      // if (!encryptedCID || !encryptedSymmetricKey) {
+      //   return;
+      // }
 
       const hashedEmail = hashEmail(email);
 
@@ -63,7 +63,11 @@ const CreateContractPage = () => {
           address: CONTRACT_ADDRESS,
           abi: ABI,
           functionName: "issueContract",
-          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
+          args: [
+            "6a7f59d9fed35091266f960f920d885e8275fb696b02c5619a5c5046d1e293e2",
+            hashedEmail,
+            "encryptedSymmetricKey",
+          ],
         });
         const txHash = await walletClient.writeContract(request);
         setTxHash(txHash);
@@ -190,7 +194,7 @@ const CreateContractPage = () => {
 
                       <div className="text-center">
                         <p>Click url to copy!</p>
-                        <CopyURL url={`http://localhost:3000/signers/${encryptedCID}`} />
+                        <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
                       </div>
                     </>
                   )}

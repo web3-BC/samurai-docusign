@@ -31,13 +31,13 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!user) {
         return;
       }
-        const jwt = await getAccessToken();
-        if (!jwt) return;
-        const userId = await getUserIdFromJwt(jwt);
+      const jwt = await getAccessToken();
+      if (!jwt) return;
+      const userId = await getUserIdFromJwt(jwt);
 
-        if (!userId) return;
-        const email = await getEmailFromUserId(userId);
-        console.log(email);
+      if (!userId) return;
+      const email = await getEmailFromUserId(userId);
+      setCID("QmWMxK4u76itNkVcLqHu8UjCLUZfipKGB1kr6Ywre3YDDS");
     };
 
     void effect();
@@ -51,7 +51,6 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
   //       const symmetrickKey = ""; // TODO
   //       console.log('effect2');
-
 
   //       try {
   //         const { CID } = await decrypt(
