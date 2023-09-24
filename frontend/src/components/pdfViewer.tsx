@@ -34,7 +34,7 @@ const PDFViewer = ({ file, className, scale }: PDFViewerProps) => {
       onLoadError={onLoadError}
       onLoadSuccess={onLoadSucess}
       renderMode="canvas"
-      className={`overflow-y-scroll shadow-xl ${className || ""}} ${showDocument || "hidden"}`}
+      className={`overflow-y-scroll shadow-xl ${className || ""} ${showDocument || "hidden"}`}
     >
       {Array.from(new Array(pageNum), (_, index) => (
         <Page
