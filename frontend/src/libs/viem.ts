@@ -20,5 +20,5 @@ export const publicClient = createPublicClient({
 
 export const CONTRACT_ADDRESS =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-    ? "0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5"
-    : "0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5";
+    ? "0x9bB307572c5041b0B1b6e0f71a42bba9F3E69DB8"
+    : "0x9bB307572c5041b0B1b6e0f71a42bba9F3E69DB8";

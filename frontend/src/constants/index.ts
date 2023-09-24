@@ -174,6 +174,57 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_sender",
+        type: "address",
+      },
+    ],
+    name: "getContractsBySender",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "encryptedCid",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "hashedEmail",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "encryptedSymmetricKey",
+            type: "string",
+          },
+          {
+            internalType: "bool",
+            name: "isSigned",
+            type: "bool",
+          },
+        ],
+        internalType: "struct ContractManager.Contract[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "encryptedCid",
         type: "string",
@@ -197,6 +248,30 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "senderToEncryptedCids",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "encryptedCid",
         type: "string",
@@ -207,4 +282,4 @@ export const ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
