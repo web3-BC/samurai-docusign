@@ -1,7 +1,7 @@
 export enum Steps {
   VerifyHuman,
   FileUpload,
-  RegisterSinger,
+  RegisterSigner,
   GetLink,
 }
 

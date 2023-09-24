@@ -29,7 +29,7 @@ const CreateContractPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [encryptedCID, setEncryptedCID] = useState<string>("");
   const { status } = useSession();
-  console.log(status);
+
   if (currentStep === Steps.VerifyHuman && status === "authenticated") {
     toast.success("You are Human!");
     setCurrentStep(Steps.FileUpload);
@@ -97,6 +97,15 @@ const CreateContractPage = () => {
                       signIn("worldcoin");
                     }}
                   />
+
+                  <button
+                    onClick={() => {
+                      setCurrentStep(Steps.FileUpload);
+                    }}
+                    className="mx-auto my-4 flex rounded-xl bg-blue-800 px-3.5 py-2.5 text-sm text-white"
+                  >
+                    or (Skip for demo)
+                  </button>
                 </div>
               );
             case Steps.FileUpload:
@@ -104,12 +113,12 @@ const CreateContractPage = () => {
                 <FileUploader file={file} setFile={setFile}>
                   <Button
                     text="Next"
-                    onClick={() => setCurrentStep(Steps.RegisterSinger)}
+                    onClick={() => setCurrentStep(Steps.RegisterSigner)}
                     className=""
                   />
                 </FileUploader>
               );
-            case Steps.RegisterSinger:
+            case Steps.RegisterSigner:
               return (
                 <div className="mx-auto w-1/3">
                   <h3 className="mb-8 text-center text-3xl font-bold">
