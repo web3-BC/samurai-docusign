@@ -5,13 +5,13 @@ const LandingPage = () => {
   return (
     <main className="w-full">
       <section className="bg-gradient">
-        <header className="shadow-b-lg z-10 h-[70px] w-full px-20 pt-12">
-          <div className="">
+        <header className="shadow-b-lg z-10 h-[70px] w-full px-20 py-4">
+          <div className="mx-auto flex h-full items-center justify-between">
             <Link href={"/"}>
               <Image
                 height={28}
-                width={350}
-                src={"/images/samurai.svg"}
+                width={250}
+                src={"/images/samurai-white.svg"}
                 alt="samurai logo"
               />
             </Link>

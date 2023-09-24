@@ -13,18 +13,17 @@ const Header = () => {
   if (pathname === "/") return <></>;
 
   return (
-    <header className="shadow-b-lg z-10 h-[70px] w-full py-3 shadow">
-      <div className="mx-auto flex h-full max-w-5xl items-center justify-between text-gray-950">
-        <div className="text-2xl font-bold">
-          <Link href={"/"}>
-            <Image
-              height={28}
-              width={250}
-              src={"/images/samurai.svg"}
-              alt="Lit Logo"
-            />
-          </Link>
-        </div>
+    <header className="shadow-b-lg z-10 h-[70px] w-full py-4 shadow">
+      <div className="mx-auto flex h-full items-center justify-between text-gray-950">
+        <Link href={"/"}>
+          <Image
+            height={28}
+            width={250}
+            src={"/images/samurai.svg"}
+            alt="Samurai Logo"
+          />
+        </Link>
+
         {pathname.startsWith("/issuers") ? (
           <div className="ml-auto pr-14">
             <Web3Button />
