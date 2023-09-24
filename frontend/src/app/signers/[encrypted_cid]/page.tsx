@@ -17,7 +17,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const { wallets } = useWallets();
   const [CID, setCID] = useState<string>(params.encrypted_cid);
   const [encryptState, setEncryptState] = useState<EncryptState>(
-    EncryptState.Success,
+    EncryptState.InProgress,
   );
   const { signContract, isSigning } = useSign({
     encryptedCid: params.encrypted_cid,
@@ -33,6 +33,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!user) {
         return;
       }
+
       const jwt = await getAccessToken();
       if (!jwt) return;
       const userId = await getUserIdFromJwt(jwt);
@@ -40,7 +41,9 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
       console.log(email);
+
       setCID("QmWMxK4u76itNkVcLqHu8UjCLUZfipKGB1kr6Ywre3YDDS");
+      setEncryptState(EncryptState.Success) // static for now
     };
 
     void effect();
