@@ -72,7 +72,7 @@ export const useLit = () => {
       domain: "localhost:3000",
       address,
       statement: "",
-      uri: "http://localhost:3000/signers/sign-in",
+      uri: "http://localhost:3000/signers/TLZ_dBPayaEHI-l7BWcv0YpyIsO24pKH1LW0wwWFTctAbXAXwpgqo2sFHcXJbqdCRivoojzlj5IL76Yvl2evDQ",
       version: "1",
       chainId: 1,
     });

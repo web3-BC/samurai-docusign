@@ -10,19 +10,21 @@ import { useLit } from "@/hooks/useLit";
 import { EncryptState } from "./encryptState";
 import Spinner from "@/components/spinner";
 import { useSign } from "./useSign";
+import { useContract } from "@/hooks/useContract";
 
 const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const { user, getAccessToken } = useAuthRecipient();
   const { decrypt } = useLit();
   const { wallets } = useWallets();
-  const [CID, setCID] = useState<string>(params.encrypted_cid);
+  const [CID, setCID] = useState<string>("");
   const [encryptState, setEncryptState] = useState<EncryptState>(
     EncryptState.Success,
   );
   const { signContract, isSigning } = useSign({
     encryptedCid: params.encrypted_cid,
   });
-  const [firstUser, setFirstUser] = useState(true);
+  const [isFirstLitReq, setIsFirstLitReq] = useState(true);
+  const { getContractByEncryptedCid } = useContract();
 
   const embeddedWallet = wallets.find(
     (wallet) => wallet.walletClientType === "privy",
@@ -40,38 +42,34 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
       console.log(email);
-      setCID("QmWMxK4u76itNkVcLqHu8UjCLUZfipKGB1kr6Ywre3YDDS");
+
+      if (embeddedWallet && isFirstLitReq) {
+        const provider = await embeddedWallet.getEthereumProvider();
+        const addr = embeddedWallet?.address;
+        console.log('addr' + addr);
+
+        const { encryptedSymmetricKey } = await getContractByEncryptedCid(params.encrypted_cid);
+        try {
+          console.log('encryptedSymmetricKey:' + encryptedSymmetricKey);
+          console.log('cid: ' + params.encrypted_cid)
+          const { CID } = await decrypt(
+            provider,
+            addr,
+            params.encrypted_cid,
+            encryptedSymmetricKey,
+          );
+          setCID(CID);
+          setEncryptState(EncryptState.Success);
+          setIsFirstLitReq(false);
+        } catch (e) {
+          console.dir(e, { depth: null });
+          setEncryptState(EncryptState.Fail);
+        }
+      }
     };
 
     void effect();
   }, [user, getAccessToken]);
-
-  // useEffect(() => {
-  //   const effect = async () => {
-  //     if (embeddedWallet) {
-  //       const provider = await embeddedWallet.getEthereumProvider();
-  //       const addr = embeddedWallet?.address;
-
-  //       const symmetrickKey = ""; // TODO
-  //       console.log('effect2');
-
-  //       try {
-  //         const { CID } = await decrypt(
-  //           provider,
-  //           addr,
-  //           params.encrypted_cid,
-  //           symmetrickKey,
-  //         );
-  //         setCID(CID);
-  //         setEncryptState(EncryptState.Success);
-  //       } catch (e) {
-  //         console.dir(e, { depth: null });
-  //         setEncryptState(EncryptState.Fail);
-  //       }
-  //     }
-  //   };
-  //   void effect();
-  // }, []);
 
   const url = `https://ipfs.io/ipfs/${CID}`;
   return (
