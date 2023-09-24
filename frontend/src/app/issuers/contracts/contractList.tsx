@@ -9,24 +9,6 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAccount, useContractRead } from "wagmi";
 
-// const contracts = [
-//   {
-//     enCid: "fewfin0239eujowqnd1j2",
-//     recipient: "test@gmail.com",
-//     status: false,
-//   },
-//   {
-//     enCid: "fewfin0239euj2f2101j2",
-//     recipient: "tes2@gmail.com",
-//     status: false,
-//   },
-//   {
-//     enCid: "fewfin02d9902n1jkkpm91j2",
-//     recipient: "tes3@gmail.com",
-//     status: false,
-//   },
-// ];
-
 type Contract = {
   enCid: string;
   recipient: string;
