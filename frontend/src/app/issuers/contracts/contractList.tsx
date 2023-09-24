@@ -63,7 +63,7 @@ const ContractList = () => {
     if (error) toast.error(error?.message);
   }, [error]);
 
-  if (status === "authenticated")
+  if (status !== "authenticated")
     return (
       <div className="mx-auto">
         <WorldCoinButton
