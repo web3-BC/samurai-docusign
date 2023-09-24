@@ -65,16 +65,16 @@ const ContractList = () => {
     if (error) toast.error(error?.message);
   }, [error]);
 
-  // if (status !== "authenticated")
-  //   return (
-  //     <div className="mx-auto">
-  //       <WorldCoinButton
-  //         onClick={() => {
-  //           signIn("worldcoin");
-  //         }}
-  //       />
-  //     </div>
-  //   );
+  if (status !== "authenticated")
+    return (
+      <div className="mx-auto">
+        <WorldCoinButton
+          onClick={() => {
+            signIn("worldcoin");
+          }}
+        />
+      </div>
+    );
 
   if (!address)
     return (
