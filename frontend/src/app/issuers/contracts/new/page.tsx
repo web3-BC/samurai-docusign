@@ -17,7 +17,6 @@ import Spinner from "@/components/spinner";
 import CopyURL from "@/components/copyUrl";
 import { hashEmail } from "@/utils";
 import { Steps } from "./steps";
-import Image from "next/image";
 
 const CreateContractPage = () => {
   const searchParams = useSearchParams();
@@ -46,10 +45,11 @@ const CreateContractPage = () => {
       console.log("encryptedCID:", encryptedCID);
       console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
       if (!encryptedCID || !encryptedSymmetricKey) {
-        return;
+        throw new Error("encryption failed");
       }
 
       const hashedEmail = hashEmail(email);
+      console.log({ hashedEmail });
 
       const walletClient = createWalletClient({
         chain: defaultChain,
@@ -63,11 +63,7 @@ const CreateContractPage = () => {
           address: CONTRACT_ADDRESS,
           abi: ABI,
           functionName: "issueContract",
-          args: [
-            encryptedCID,
-            hashedEmail,
-            encryptedSymmetricKey,
-          ],
+          args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
         });
         const txHash = await walletClient.writeContract(request);
         setTxHash(txHash);
@@ -76,11 +72,8 @@ const CreateContractPage = () => {
         setIsLoading(false);
         return;
       }
-
-      setEncryptedCID(
-        encryptedCID,
-      );
       setIsLoading(false);
+      setEncryptedCID(encryptedCID);
       setCurrentStep(Steps.GetLink);
     } else {
       toast.error("input is invalid");
@@ -179,11 +172,11 @@ const CreateContractPage = () => {
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="1"
+                            strokeWidth="1"
                           >
                             <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                           </svg>
@@ -194,7 +187,7 @@ const CreateContractPage = () => {
                             <p className="text-center">
                               You can check your tx{" "}
                               <a
-                                href={`https://mumbai.polygonscan.com/${txHash}`}
+                                href={`https://mumbai.polygonscan.com/tx/${txHash}`}
                                 className="text-secondary-500"
                               >
                                 here
@@ -202,10 +195,12 @@ const CreateContractPage = () => {
                             </p>
                           )}
 
-                          <div className="text-center">
-                            <p>Click url to copy!</p>
+                          <div className="max-w-3/4 !mt-20 text-center">
+                            <p className="mb-2 text-lg">
+                              Send your contract to recipient! 📩
+                            </p>
                             <CopyURL
-                              url={`https://samurai-docusign.vercel.app/signers/${encryptedCID}`}
+                              url={`${process.env.NEXT_PUBLIC_APP_BASE_URL || "http://localhost:3000"}/signers/${encryptedCID}`}
                             />
                           </div>
                         </div>

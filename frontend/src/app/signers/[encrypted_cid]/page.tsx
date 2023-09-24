@@ -18,7 +18,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const { wallets } = useWallets();
   const [CID, setCID] = useState<string>("");
   const [encryptState, setEncryptState] = useState<EncryptState>(
-    EncryptState.Success,
+    EncryptState.InProgress,
   );
   const { signContract, isSigning } = useSign({
     encryptedCid: params.encrypted_cid,
@@ -35,6 +35,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!user) {
         return;
       }
+
       const jwt = await getAccessToken();
       if (!jwt) return;
       const userId = await getUserIdFromJwt(jwt);
@@ -42,7 +43,6 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
       console.log(email);
-      
       if (embeddedWallet && isFirstLitReq) {
         setIsFirstLitReq(false);
         const provider = await embeddedWallet.getEthereumProvider();
