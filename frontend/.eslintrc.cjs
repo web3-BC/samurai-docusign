@@ -11,6 +11,7 @@ const config = {
   rules: {
     "import/no-anonymous-default-export": ["off"],
     "@typescript-eslint/no-var-requires": ["off"],
+    "@typescript-eslint/no-unused-vars": ["off"],
   },
 };
 

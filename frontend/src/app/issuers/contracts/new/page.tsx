@@ -111,25 +111,27 @@ const CreateContractPage = () => {
               );
             case Steps.RegisterSinger:
               return (
-                <div className="mx-auto w-1/3">
+                <div className="mx-auto w-1/2">
                   <h3 className="mb-8 text-center text-3xl font-bold">
                     Register signer email address
                   </h3>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block font-medium text-gray-900 dark:text-white"
-                  >
-                    Signer email
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="mb-8 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    required
-                  />
-                  <div className="flex flex-row justify-between">
+                  <div className="w-2/3 mx-auto">
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block font-medium text-gray-900 dark:text-white"
+                    >
+                      Signer email
+                    </label>
+                    <input
+                      type="text"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="mb-8 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between w-2/3 mx-auto">
                     <Button
                       text="Back"
                       onClick={() => setCurrentStep(Steps.FileUpload)}

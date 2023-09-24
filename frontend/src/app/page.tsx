@@ -10,9 +10,11 @@ const LandingPage = () => {
             <div className="text-2xl font-bold text-white">
               <Link href={"/"}>Samurai Sign</Link>
             </div>
-            <div className="rounded-2xl border border-white px-4 py-1 text-lg font-bold text-white">
-              <Link href={"/issuers/contracts/new"}>Create New Contract</Link>
-            </div>
+            <Link href={"/issuers/contracts/new"}>
+              <div className="rounded-2xl border border-white px-4 py-1 text-lg font-bold text-white">
+                Create New Contract
+              </div>
+            </Link>
           </div>
         </header>
         <div className="px-20 py-56">
@@ -21,9 +23,11 @@ const LandingPage = () => {
               Trustless & UX evolved <br />
               Document Signing dApp
             </h2>
-            <div className="ml-auto mt-6 max-w-fit rounded-2xl border border-white px-6 py-2 text-2xl font-bold text-white">
-              <Link href={"/issuers/contracts/new"}>Create New Contract</Link>
-            </div>
+            <Link href={"/issuers/contracts/new"}>
+              <div className="ml-auto mt-6 max-w-fit rounded-2xl border border-white px-6 py-2 text-2xl font-bold text-white">
+                Create New Contract
+              </div>
+            </Link>
           </div>
         </div>
       </section>
