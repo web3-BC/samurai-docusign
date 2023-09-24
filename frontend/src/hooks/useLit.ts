@@ -129,7 +129,97 @@ export const useLit = () => {
     return { CID };
   };
 
-  
+  const updateACCs = async(
+    provider: EIP1193Provider,
+    address: string,
+    encryptedString: string,
+    encryptedSymmetricKey: string,
+    accessToken: string) => {
 
-  return { encrypt, decrypt };
+    await connect();
+
+    const siweMessage = new SiweMessage({
+      domain: "localhost:3000",
+      address,
+      statement: "",
+      uri: "http://localhost:3000/signers/sign-in",
+      version: "1",
+      chainId: 1,
+    });
+
+    const wallet = createWalletClient({
+      chain: polygonMumbai,
+      transport: custom(provider),
+    });
+
+    const messageToSign = siweMessage.prepareMessage();
+
+    const [account] = await wallet.getAddresses();
+    if (!account) {
+      throw Error("account not found");
+    }
+
+    const signature = await wallet.signMessage({
+      account: account,
+      message: messageToSign,
+    });
+
+    const authSig: AuthSig = {
+      sig: signature,
+      derivedVia: "web3.eth.personal.sign",
+      signedMessage: messageToSign,
+      address: address,
+    };
+
+    const ACCs: AccessControlConditions = [
+      {
+        contractAddress: litActionUrl,
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "verify",
+        parameters: ["", ""],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
+
+    const newACCs: AccessControlConditions = [
+      {
+        contractAddress: litActionUrl,
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "verify",
+        parameters: [encryptedString, accessToken],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
+
+    const symmetricKey = await client.getEncryptionKey({
+      accessControlConditions: ACCs,
+      toDecrypt: encryptedSymmetricKey,
+      authSig,
+      chain,
+    });
+
+    const newEncryptedSymmetricKey = await client.saveEncryptionKey({
+      accessControlConditions: newACCs,
+      symmetricKey,
+      authSig,
+      chain,
+      permanent: false,
+    });
+
+    console.log(LitJsSdk.uint8arrayToString(
+      newEncryptedSymmetricKey,
+      "base16",
+    ));
+    return {newEncryptedSymmetricKey}
+  }
+
+  return { encrypt, decrypt, updateACCs };
 };
