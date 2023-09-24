@@ -20,6 +20,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
     EncryptState.Success,
   );
   const { signContract } = useSign({ encryptedCid: params.encrypted_cid });
+  const [firstUser, setFirstUser] = useState(true);
 
   const embeddedWallet = wallets.find(
     (wallet) => wallet.walletClientType === "privy",
@@ -27,29 +28,58 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
   useEffect(() => {
     const effect = async () => {
+      console.log('effect1');
+      console.dir(user);
+
       if (!user) {
         return;
       }
-      const jwt = await getAccessToken();
-      if (!jwt) return;
-      const userId = await getUserIdFromJwt(jwt);
+      if (firstUser) {
 
-      if (!userId) return;
-      const email = await getEmailFromUserId(userId);
-      console.log(email);
+        const jwt = await getAccessToken();
+        if (!jwt) return;
+        const userId = await getUserIdFromJwt(jwt);
+
+        if (!userId) return;
+        const email = await getEmailFromUserId(userId);
+        console.log(email);
+
+        const provider = await embeddedWallet!.getEthereumProvider();
+        const addr = embeddedWallet!.address;
+
+        const symmetrickKey = ""; // TODO
+        console.log('effect2');
+        try {
+
+          const { CID } = await decrypt(
+            provider,
+            addr,
+            params.encrypted_cid,
+            symmetrickKey,
+          );
+          alert(CID)
+        } catch (err) {
+          console.log('error');
+
+          console.log(err);
+        }
+        setFirstUser(false);
+      }
     };
 
     void effect();
-  }, [user, getAccessToken]);
+  }, [user]);
 
   // useEffect(() => {
   //   const effect = async () => {
   //     if (embeddedWallet) {
   //       const provider = await embeddedWallet.getEthereumProvider();
   //       const addr = embeddedWallet?.address;
-  //
+
   //       const symmetrickKey = ""; // TODO
-  //
+  //       console.log('effect2');
+
+
   //       try {
   //         const { CID } = await decrypt(
   //           provider,
