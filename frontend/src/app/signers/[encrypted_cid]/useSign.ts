@@ -14,7 +14,6 @@ export const useSign = (params: UseSignParams) => {
   const router = useRouter();
 
   const signContract = useCallback(async () => {
-    console.log("Start Signing");
     setIsSigning(true);
     const biconomySmartAccount = await createSmartAccount();
     if (!biconomySmartAccount) {

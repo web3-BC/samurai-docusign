@@ -50,7 +50,7 @@ export const useLit = () => {
     });
 
     const encryptedCID = await LitJsSdk.blobToBase64String(encryptedString);
-    
+
     return {
       encryptedCID: encryptedCID,
       encryptedSymmetricKey: LitJsSdk.uint8arrayToString(
@@ -129,13 +129,13 @@ export const useLit = () => {
     return { CID };
   };
 
-  const updateACCs = async(
+  const updateACCs = async (
     provider: EIP1193Provider,
     address: string,
     encryptedString: string,
     encryptedSymmetricKey: string,
-    accessToken: string) => {
-
+    accessToken: string,
+  ) => {
     await connect();
 
     const siweMessage = new SiweMessage({
@@ -214,17 +214,12 @@ export const useLit = () => {
       permanent: false,
     });
 
-    console.log(LitJsSdk.uint8arrayToString(
-      newEncryptedSymmetricKey,
-      "base16",
-    ));
-
     const newEncryptedSymmetricKeyStr = LitJsSdk.uint8arrayToString(
       newEncryptedSymmetricKey,
       "base16",
-    )
-    return {newEncryptedSymmetricKeyStr}
-  }
+    );
+    return { newEncryptedSymmetricKeyStr };
+  };
 
   return { encrypt, decrypt, updateACCs };
 };

@@ -42,36 +42,32 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
-      console.log("email:", email);
+
       if (embeddedWallet && isFirstLitReq) {
         setIsFirstLitReq(false);
         const provider = await embeddedWallet.getEthereumProvider();
         const addr = embeddedWallet?.address;
-        console.log('addr: ' + addr);
 
-        const { encryptedSymmetricKey } = await getContractByEncryptedCid(params.encrypted_cid);
+        const { encryptedSymmetricKey } = await getContractByEncryptedCid(
+          params.encrypted_cid,
+        );
         try {
-          console.log('encryptedSymmetricKey:' + encryptedSymmetricKey);
-          console.log('encrypted_cid: ' + params.encrypted_cid)
-
-          const {newEncryptedSymmetricKeyStr} = await updateACCs(
+          const { newEncryptedSymmetricKeyStr } = await updateACCs(
             provider,
             addr,
             params.encrypted_cid,
             encryptedSymmetricKey,
-            jwt
+            jwt,
           );
 
-          console.log('updateACCs completed');
-          
           const { CID } = await decrypt(
             provider,
             addr,
             params.encrypted_cid,
             newEncryptedSymmetricKeyStr,
-            jwt
+            jwt,
           );
-          console.log('decryption completed');
+
           setCID(CID);
           setEncryptState(EncryptState.Success);
         } catch (e) {

@@ -42,14 +42,12 @@ const CreateContractPage = () => {
       const cid = await upload(file);
 
       const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
-      console.log("encryptedCID:", encryptedCID);
-      console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+
       if (!encryptedCID || !encryptedSymmetricKey) {
         throw new Error("encryption failed");
       }
 
       const hashedEmail = hashEmail(email);
-      console.log({ hashedEmail });
 
       const walletClient = createWalletClient({
         chain: defaultChain,
@@ -149,7 +147,6 @@ const CreateContractPage = () => {
                     <Button
                       text="Create Contract"
                       onClick={() => {
-                        console.log("Create Contract");
                         onClickIssueContract();
                       }}
                       className=""
@@ -200,7 +197,10 @@ const CreateContractPage = () => {
                               Send your contract to recipient! 📩
                             </p>
                             <CopyURL
-                              url={`${process.env.NEXT_PUBLIC_APP_BASE_URL || "http://localhost:3000"}/signers/${encryptedCID}`}
+                              url={`${
+                                process.env.NEXT_PUBLIC_APP_BASE_URL ||
+                                "http://localhost:3000"
+                              }/signers/${encryptedCID}`}
                             />
                           </div>
                         </div>
