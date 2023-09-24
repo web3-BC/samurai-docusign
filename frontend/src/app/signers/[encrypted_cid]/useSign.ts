@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useBiconomy } from "@/hooks/useBiconomy";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type UseSignParams = {
   encryptedCid: string;
@@ -9,6 +10,7 @@ type UseSignParams = {
 export const useSign = (params: UseSignParams) => {
   const { encryptedCid } = params;
   const { createSmartAccount, executeContract } = useBiconomy();
+  const router = useRouter();
 
   const signContract = useCallback(async () => {
     const biconomySmartAccount = await createSmartAccount();
@@ -18,6 +20,7 @@ export const useSign = (params: UseSignParams) => {
     await executeContract(biconomySmartAccount, "signContract", [encryptedCid])
       .then((transactionDetails) => {
         toast.success("Complete Sign!!");
+        router.push("/signer/success");
         console.log(
           "Complete Sign!! Transaction Hash is:",
           transactionDetails.receipt.transactionHash,
