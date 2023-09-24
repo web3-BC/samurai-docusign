@@ -14,7 +14,7 @@ import { useContract } from "@/hooks/useContract";
 
 const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const { user, getAccessToken } = useAuthRecipient();
-  const { decrypt } = useLit();
+  const { decrypt, updateACCs } = useLit();
   const { wallets } = useWallets();
   const [CID, setCID] = useState<string>("");
   const [encryptState, setEncryptState] = useState<EncryptState>(
@@ -53,13 +53,25 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
         try {
           console.log('encryptedSymmetricKey:' + encryptedSymmetricKey);
           console.log('cid: ' + params.encrypted_cid)
-          const { CID } = await decrypt(
+
+          const {newEncryptedSymmetricKeyStr} = await updateACCs(
             provider,
             addr,
             params.encrypted_cid,
             encryptedSymmetricKey,
             jwt
           );
+
+          console.log('updateACCs completed');
+          
+          const { CID } = await decrypt(
+            provider,
+            addr,
+            params.encrypted_cid,
+            newEncryptedSymmetricKeyStr,
+            jwt
+          );
+          console.log('decryption completed');
           setCID(CID);
           setEncryptState(EncryptState.Success);
         } catch (e) {

@@ -75,7 +75,7 @@ export const useLit = () => {
         standardContractType: "LitAction",
         chain: chain,
         method: "verify",
-        parameters: [encryptedString, accessToken],
+        parameters: [encryptedString, 'aaa'],
         returnValueTest: {
           comparator: "=",
           value: "true",
@@ -218,7 +218,12 @@ export const useLit = () => {
       newEncryptedSymmetricKey,
       "base16",
     ));
-    return {newEncryptedSymmetricKey}
+
+    const newEncryptedSymmetricKeyStr = LitJsSdk.uint8arrayToString(
+      newEncryptedSymmetricKey,
+      "base16",
+    )
+    return {newEncryptedSymmetricKeyStr}
   }
 
   return { encrypt, decrypt, updateACCs };
