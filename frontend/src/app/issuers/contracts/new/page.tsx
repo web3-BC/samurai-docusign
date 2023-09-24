@@ -203,7 +203,7 @@ const CreateContractPage = () => {
                           <div className="text-center">
                             <p>Click url to copy!</p>
                             <CopyURL
-                              url={`http://localhost:3000/signers/${encryptedCID}`}
+                              url={`https://samurai-docusign.vercel.app/signers/${encryptedCID}`}
                             />
                           </div>
                         </div>
