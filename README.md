@@ -28,12 +28,15 @@ Contract signers don't need wallet & gas fees. They only have to social login an
 
 ### Contract address
 
-| Chain                 | ChainId | contract address                           |
-| --------------------- | ------- | ------------------------------------------ |
-| Polygon PoS Mumbai    | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
-| Polygon zkEVM Testnet | 1442    | 0x8Dc2898e6Cc89E85f4d1E6645Cb8D1A6d88f80c7 |
-| Scroll Sepolia        | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
-| Gnosis Chiado         | 10200   | 0x9795ED7a57F4A06867f06DcDc83D368583853da2 |
+| Chain                 | ChainId  | contract address                           |
+| --------------------- | -------- | ------------------------------------------ |
+| Polygon PoS Mumbai    | 80001    | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
+| Polygon zkEVM Testnet | 1442     | 0x8Dc2898e6Cc89E85f4d1E6645Cb8D1A6d88f80c7 |
+| Scroll Sepolia        | 534351   | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
+| Gnosis Chiado         | 10200    | 0x9795ED7a57F4A06867f06DcDc83D368583853da2 |
+| Stylus Testnet        | 23011913 | 0x8Dc2898e6Cc89E85f4d1E6645Cb8D1A6d88f80c7 |
+
+Tweet when we deployed on Gnosis: [Tweet](https://twitter.com/yokoch0/status/1705850112201596977)
 
 ### User experience flow
 
