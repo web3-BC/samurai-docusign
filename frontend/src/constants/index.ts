@@ -283,3 +283,12 @@ export const ABI = [
     type: "function",
   },
 ] as const;
+
+export type Functions =
+  | "encryptedCidToContract"
+  | "getContractByEncryptedCid"
+  | "getContractsBySender"
+  | "issueContract"
+  | "senderToEncryptedCids"
+  | "signContract"
+  | undefined;
