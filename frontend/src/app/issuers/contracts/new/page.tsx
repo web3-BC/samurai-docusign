@@ -201,7 +201,7 @@ const CreateContractPage = () => {
                               Send your contract to recipient! 📩
                             </p>
                             <CopyURL
-                              url={`https://samurai-docusign.vercel.app/signers/${encryptedCID}`}
+                              url={`${process.env.NEXT_PUBLIC_APP_BASE_URL || "http://localhost:3000"}/signers/${encryptedCID}`}
                             />
                           </div>
                         </div>
