@@ -69,9 +69,8 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         defaultChain={polygonMumbai}
         themeVariables={{
           "--w3m-font-family": "B612, sans-serif",
-          "--w3m-accent-fill-color": "#33257F",
           "--w3m-background-color": "#33257F",
-          "--w3m-accent-color": "#FFF",
+          "--w3m-accent-color": "#33257F",
         }}
       />
     </>

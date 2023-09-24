@@ -50,7 +50,7 @@ export const useLit = () => {
     });
 
     const encryptedCID = await LitJsSdk.blobToBase64String(encryptedString);
-
+    
     return {
       encryptedCID: encryptedCID,
       encryptedSymmetricKey: LitJsSdk.uint8arrayToString(
@@ -111,7 +111,6 @@ export const useLit = () => {
     const encryptedCID = await LitJsSdk.base64StringToBlob(encryptedString);
 
     const CID = await LitJsSdk.decryptString(encryptedCID, symmetricKey);
-
     return { CID };
   };
 

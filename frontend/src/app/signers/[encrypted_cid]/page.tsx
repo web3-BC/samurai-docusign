@@ -20,6 +20,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
     EncryptState.Success,
   );
   const { signContract } = useSign({ encryptedCid: params.encrypted_cid });
+  const [firstUser, setFirstUser] = useState(true);
 
   const embeddedWallet = wallets.find(
     (wallet) => wallet.walletClientType === "privy",
@@ -30,13 +31,13 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!user) {
         return;
       }
-      const jwt = await getAccessToken();
-      if (!jwt) return;
-      const userId = await getUserIdFromJwt(jwt);
+        const jwt = await getAccessToken();
+        if (!jwt) return;
+        const userId = await getUserIdFromJwt(jwt);
 
-      if (!userId) return;
-      const email = await getEmailFromUserId(userId);
-      console.log(email);
+        if (!userId) return;
+        const email = await getEmailFromUserId(userId);
+        console.log(email);
     };
 
     void effect();
@@ -47,9 +48,11 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   //     if (embeddedWallet) {
   //       const provider = await embeddedWallet.getEthereumProvider();
   //       const addr = embeddedWallet?.address;
-  //
+
   //       const symmetrickKey = ""; // TODO
-  //
+  //       console.log('effect2');
+
+
   //       try {
   //         const { CID } = await decrypt(
   //           provider,

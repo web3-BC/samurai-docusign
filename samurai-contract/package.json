@@ -4,6 +4,7 @@
     "migrate:arbitrumGoerli": "npx hardhat run --network arbitrumGoerli scripts/deploy.ts",
     "migrate:mumbai": "npx hardhat run --network mumbai scripts/deploy.ts",
     "migrate:zkEvm": "npx hardhat run --network zkEvm scripts/deploy.ts",
+    "migrate:gnosis": "npx hardhat run --network gnosis scripts/deploy.ts",
     "prettier": "npx prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
   },
   "devDependencies": {

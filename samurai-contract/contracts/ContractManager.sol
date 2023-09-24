@@ -25,6 +25,7 @@ contract ContractManager {
     }
 
     mapping(string => Contract) public encryptedCidToContract;
+    mapping(address => string[]) public senderToEncryptedCids;
 
     function issueContract(
         string calldata encryptedCid,
@@ -45,6 +46,7 @@ contract ContractManager {
             false
         );
         encryptedCidToContract[encryptedCid] = newContract;
+        senderToEncryptedCids[msg.sender].push(encryptedCid);
 
         emit ContractIssued(
             newContract.sender,
@@ -72,5 +74,18 @@ contract ContractManager {
         string calldata encryptedCid
     ) external view returns (Contract memory) {
         return encryptedCidToContract[encryptedCid];
+    }
+
+    function getContractsBySender(
+        address _sender
+    ) public view returns (Contract[] memory) {
+        string[] memory encryptedCids = senderToEncryptedCids[_sender];
+        Contract[] memory contracts = new Contract[](encryptedCids.length);
+
+        for (uint i = 0; i < encryptedCids.length; i++) {
+            contracts[i] = encryptedCidToContract[encryptedCids[i]];
+        }
+
+        return contracts;
     }
 }
