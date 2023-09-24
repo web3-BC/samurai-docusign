@@ -19,7 +19,9 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
   const [encryptState, setEncryptState] = useState<EncryptState>(
     EncryptState.Success,
   );
-  const { signContract } = useSign({ encryptedCid: params.encrypted_cid });
+  const { signContract, isSigning } = useSign({
+    encryptedCid: params.encrypted_cid,
+  });
   const [firstUser, setFirstUser] = useState(true);
 
   const embeddedWallet = wallets.find(
@@ -37,6 +39,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
+      console.log(email);
       setCID("QmWMxK4u76itNkVcLqHu8UjCLUZfipKGB1kr6Ywre3YDDS");
     };
 
@@ -93,6 +96,8 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
                     className="mt-8 w-72"
                     text="Sign Contract"
                     onClick={signContract}
+                    isLoading={isSigning}
+                    loadingText="Signing now..."
                   />
                 </div>
               </div>
