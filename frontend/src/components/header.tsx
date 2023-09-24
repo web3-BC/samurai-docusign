@@ -13,7 +13,7 @@ const Header = () => {
   if (pathname === "/") return <></>;
 
   return (
-    <header className="shadow-b-lg z-10 h-[70px] w-full py-4 shadow">
+    <header className="shadow-b-lg z-10 h-[70px] w-full px-20 py-4 shadow">
       <div className="mx-auto flex h-full items-center justify-between text-gray-950">
         <Link href={"/"}>
           <Image
