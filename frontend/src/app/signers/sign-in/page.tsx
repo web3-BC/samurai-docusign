@@ -4,11 +4,11 @@ import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { ChangeEvent, useState } from "react";
 
 const SignerPage = () => {
-  const { login } = usePrivy();
+  const { login, getAccessToken } = usePrivy();
   const { wallets } = useWallets();
   const [enCid, setEnCid] = useState('');
   const [key, setKey] = useState('');
-  const { decrypt } = useLit();
+  const { decrypt, updateACCs } = useLit();
   const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
 
   const handleChangeEnCid = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,13 +20,15 @@ const SignerPage = () => {
   };
 
   const handleClickBtn = async () => {
-    if (embeddedWallet) {
+    const accessToken = await getAccessToken();
+    if (embeddedWallet && accessToken) {
       const provider = await embeddedWallet.getEthereumProvider();
       const addr = embeddedWallet?.address;
       
       try{
-        const {CID} = await decrypt(provider, addr, enCid, key);
-        alert(CID);
+        // const {CID} = await decrypt(provider, addr, enCid, key, accessToken);
+        // alert(CID);
+        const {newEncryptedSymmetricKey} = await updateACCs(provider, addr, enCid, key, accessToken);
       }catch(e){
         console.dir(e,  { depth: null });
       }

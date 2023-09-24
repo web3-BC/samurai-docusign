@@ -7,8 +7,9 @@ export const client = new LitJsSdk.LitNodeClient({
 });
 export const chain = "ethereum";
 
-export const litActionUrl =
-  "ipfs://QmX3ATabgddAd1fhtsQjWzFGFsYRmKzBZXXEusYaUNurcT";
+export const litActionUrl = "ipfs://QmfKK9XW4EoJZZHJPZJJ4PJ2n6JfNPueqnXL3CYz649VLG"
+// "QmNvidh55hgGqoKece5SYzuGd6n8MP9qCwPNz8xjGXcPh8"
+  // "ipfs://QmX3ATabgddAd1fhtsQjWzFGFsYRmKzBZXXEusYaUNurcT";
 
 export const litActionCode = `
 const verify = async () => {
