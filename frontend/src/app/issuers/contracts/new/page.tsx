@@ -194,7 +194,7 @@ const CreateContractPage = () => {
 
                       <div className="text-center">
                         <p>Click url to copy!</p>
-                        <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
+                        <CopyURL url={`http://localhost:3000/signers/${encryptedCID}`} />
                       </div>
                     </>
                   )}
