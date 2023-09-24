@@ -28,14 +28,9 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
   useEffect(() => {
     const effect = async () => {
-      console.log('effect1');
-      console.dir(user);
-
       if (!user) {
         return;
       }
-      if (firstUser) {
-
         const jwt = await getAccessToken();
         if (!jwt) return;
         const userId = await getUserIdFromJwt(jwt);
@@ -43,32 +38,10 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
         if (!userId) return;
         const email = await getEmailFromUserId(userId);
         console.log(email);
-
-        const provider = await embeddedWallet!.getEthereumProvider();
-        const addr = embeddedWallet!.address;
-
-        const symmetrickKey = ""; // TODO
-        console.log('effect2');
-        try {
-
-          const { CID } = await decrypt(
-            provider,
-            addr,
-            params.encrypted_cid,
-            symmetrickKey,
-          );
-          alert(CID)
-        } catch (err) {
-          console.log('error');
-
-          console.log(err);
-        }
-        setFirstUser(false);
-      }
     };
 
     void effect();
-  }, [user]);
+  }, [user, getAccessToken]);
 
   // useEffect(() => {
   //   const effect = async () => {
