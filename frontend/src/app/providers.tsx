@@ -13,18 +13,18 @@ import { polygonMumbai } from "viem/chains";
 import { Web3Modal } from "@web3modal/react";
 import { PrivyProvider, User } from "@privy-io/react-auth";
 
-import { currentChain } from "@/libs/viem";
+import { defaultChain } from "@/libs/viem";
 
 const projectID = `${process.env.NEXT_PUBLIC_WC_PROJECT_ID}` || "";
 
 const { publicClient, webSocketPublicClient } = configureChains(
-  [currentChain],
+  [defaultChain],
   [w3mProvider({ projectId: projectID })],
 );
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: w3mConnectors({ chains: [currentChain], projectId: projectID }),
+  connectors: w3mConnectors({ chains: [defaultChain], projectId: projectID }),
   publicClient,
   webSocketPublicClient,
 });
@@ -40,7 +40,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     router.push(path);
   };
 
-  const ethereumClient = new EthereumClient(wagmiConfig, [currentChain]);
+  const ethereumClient = new EthereumClient(wagmiConfig, [defaultChain]);
 
   return (
     <>

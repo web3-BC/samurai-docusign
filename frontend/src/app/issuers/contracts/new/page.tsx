@@ -10,7 +10,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
 import { Address, createWalletClient, custom } from "viem";
-import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
+import { CONTRACT_ADDRESS, defaultChain, publicClient } from "@/libs/viem";
 import { ABI } from "@/constants";
 import toast from "react-hot-toast";
 import Spinner from "@/components/spinner";
@@ -52,7 +52,7 @@ const CreateContractPage = () => {
       const hashedEmail = hashEmail(email);
 
       const walletClient = createWalletClient({
-        chain: currentChain,
+        chain: defaultChain,
         transport: custom(window.ethereum),
       });
       const [account] = await walletClient.getAddresses();

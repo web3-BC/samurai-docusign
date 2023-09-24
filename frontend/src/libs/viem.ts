@@ -2,13 +2,13 @@ import { createPublicClient, fallback } from "viem";
 import { polygonMumbai } from "viem/chains";
 import { RPC_LIST } from "../constants";
 
-export const currentChain =
+export const defaultChain =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
     ? polygonMumbai
     : polygonMumbai;
 
 export const publicClient = createPublicClient({
-  chain: currentChain,
+  chain: defaultChain,
   transport: fallback(
     RPC_LIST[
       process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
