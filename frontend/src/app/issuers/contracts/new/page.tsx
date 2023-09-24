@@ -64,7 +64,7 @@ const CreateContractPage = () => {
           abi: ABI,
           functionName: "issueContract",
           args: [
-            "6a7f59d9fed35091266f960f920d885e8275fb696b02c5619a5c5046d1e293e2",
+            "682f14a83601eba5d0b7b572372d2f1e5d573a11d25722752aaae98885c91567",
             hashedEmail,
             "encryptedSymmetricKey",
           ],
@@ -77,7 +77,9 @@ const CreateContractPage = () => {
         return;
       }
 
-      setEncryptedCID(encryptedCID);
+      setEncryptedCID(
+        "682f14a83601eba5d0b7b572372d2f1e5d573a11d25722752aaae98885c91567",
+      );
       setIsLoading(false);
       setCurrentStep(Steps.GetLink);
     } else {
