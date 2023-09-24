@@ -164,37 +164,49 @@ const CreateContractPage = () => {
               );
             case Steps.GetLink:
               return (
-                <div className="mx-auto w-2/5">
+                <div className="mx-auto w-3/5">
                   {isLoading ? (
                     <Spinner className="mx-auto h-12 w-12" />
                   ) : (
                     <>
-                      <h3 className="mb-2 text-center text-3xl font-bold">
-                        Create contract succeeded!🎉
-                      </h3>
-                      {txHash && (
-                        <p className="text-center">
-                          You can check your tx{" "}
-                          <a
-                            href={`https://mumbai.polygonscan.com/${txHash}`}
-                            className="text-secondary-500"
+                      <div>
+                        <div className="flex flex-col items-center space-y-4">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-28 w-28 text-green-600"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1"
                           >
-                            here
-                          </a>
-                        </p>
-                      )}
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          <h1 className="text-4xl font-bold">
+                            Create contract succeeded!🎉
+                          </h1>
+                          {txHash && (
+                            <p className="text-center">
+                              You can check your tx{" "}
+                              <a
+                                href={`https://mumbai.polygonscan.com/${txHash}`}
+                                className="text-secondary-500"
+                              >
+                                here
+                              </a>
+                            </p>
+                          )}
 
-                      <Image
-                        width={100}
-                        height={100}
-                        alt="Success Icon"
-                        src="/images/success-icon.png"
-                        className="mx-auto mt-8 w-2/4"
-                      />
-
-                      <div className="text-center">
-                        <p>Click url to copy!</p>
-                        <CopyURL url={`http://localhost:3000/signers/${encryptedCID}`} />
+                          <div className="text-center">
+                            <p>Click url to copy!</p>
+                            <CopyURL
+                              url={`http://localhost:3000/signers/${encryptedCID}`}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </>
                   )}
