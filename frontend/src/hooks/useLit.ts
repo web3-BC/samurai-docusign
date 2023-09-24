@@ -31,6 +31,8 @@ export const useLit = () => {
   const encrypt = async (cid: string) => {
     await connect();
 
+    console.log('connect completed');
+
     // check if wallet is connected
     if (localStorage.getItem("wagmi.connected") != "true") {
       toast.error("Please connect wallet");
@@ -40,7 +42,11 @@ export const useLit = () => {
 
     const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain });
 
+    console.log('checkAndSignAuthMessage completed');
+
     const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(cid);
+
+    console.log('encryptString completed');
 
     const encryptedSymmetricKey = await client.saveEncryptionKey({
       accessControlConditions: ACCs,
@@ -49,7 +55,12 @@ export const useLit = () => {
       chain,
     });
 
+    console.log('saveEncryptionKey completed');
+
     const encryptedCID = await LitJsSdk.blobToBase64String(encryptedString);
+    
+    console.log('blobToBase64String completed');
+    console.log(encryptedCID);
 
     return {
       encryptedCID: encryptedCID,
@@ -67,6 +78,8 @@ export const useLit = () => {
     encryptedSymmetricKey: string,
   ) => {
     connect();
+
+    console.log('connect completed');
 
     const siweMessage = new SiweMessage({
       domain: "localhost:3000",
@@ -101,6 +114,9 @@ export const useLit = () => {
       address: address,
     };
 
+    console.log('authsig completed');
+    console.log(authSig);
+
     const symmetricKey = await client.getEncryptionKey({
       accessControlConditions: ACCs,
       toDecrypt: encryptedSymmetricKey,
@@ -108,9 +124,17 @@ export const useLit = () => {
       chain,
     });
 
+    console.log('getEncryptionKey completed');
+    console.log(symmetricKey);
+
     const encryptedCID = await LitJsSdk.base64StringToBlob(encryptedString);
 
+    console.log('base64StringToBlob completed');
+    console.log(encryptedCID);
+
     const CID = await LitJsSdk.decryptString(encryptedCID, symmetricKey);
+    console.log('decryptString completed');
+    console.log(CID);
 
     return { CID };
   };
