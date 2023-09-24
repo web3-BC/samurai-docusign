@@ -54,11 +54,11 @@ const Stepper = ({ currentStep, className }: StepperProps) => {
       </li>
       <li
         className={`${
-          currentStep >= Steps.RegisterSinger ? "text-secondary-500 " : ""
+          currentStep >= Steps.RegisterSigner ? "text-secondary-500 " : ""
         }after:border-1 flex items-center after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 after:content-[''] dark:after:border-gray-700 sm:after:inline-block md:w-full xl:after:mx-10`}
       >
         <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
-          {currentStep > Steps.RegisterSinger ? (
+          {currentStep > Steps.RegisterSigner ? (
             <svg
               className="mr-2.5 h-3.5 w-3.5 sm:h-4 sm:w-4"
               aria-hidden="true"
