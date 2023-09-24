@@ -20,7 +20,7 @@ export const useSign = (params: UseSignParams) => {
     await executeContract(biconomySmartAccount, "signContract", [encryptedCid])
       .then((transactionDetails) => {
         toast.success("Complete Sign!!");
-        router.push("/signer/success");
+        router.push("/signers/success");
         console.log(
           "Complete Sign!! Transaction Hash is:",
           transactionDetails.receipt.transactionHash,
