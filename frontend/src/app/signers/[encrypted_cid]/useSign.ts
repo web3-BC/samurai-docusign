@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useBiconomy } from "@/hooks/useBiconomy";
 import toast from "react-hot-toast";
 
@@ -10,13 +10,12 @@ export const useSign = (params: UseSignParams) => {
   const { encryptedCid } = params;
   const { createSmartAccount, executeContract } = useBiconomy();
 
-  useEffect(() => {
-    console.log("createSmartAccount");
-    createSmartAccount();
-  }, []);
-
   const signContract = useCallback(async () => {
-    await executeContract("signContract", [encryptedCid])
+    const biconomySmartAccount = await createSmartAccount();
+    if (!biconomySmartAccount) {
+      throw new Error("Failed to create smart account");
+    }
+    await executeContract(biconomySmartAccount, "signContract", [encryptedCid])
       .then((transactionDetails) => {
         toast.success("Complete Sign!!");
         console.log(
@@ -28,7 +27,7 @@ export const useSign = (params: UseSignParams) => {
         toast.error("Error");
         console.log("Error:", error);
       });
-  }, [encryptedCid, executeContract]);
+  }, [createSmartAccount, encryptedCid, executeContract]);
 
   return { signContract };
 };
