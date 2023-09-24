@@ -42,12 +42,12 @@ const CreateContractPage = () => {
     if (file) {
       const cid = await upload(file);
 
-      // const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
-      // console.log("encryptedCID:", encryptedCID);
-      // console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
-      // if (!encryptedCID || !encryptedSymmetricKey) {
-      //   return;
-      // }
+      const { encryptedCID, encryptedSymmetricKey } = await encrypt(cid);
+      console.log("encryptedCID:", encryptedCID);
+      console.log("encryptedSymmetricKey:", encryptedSymmetricKey);
+      if (!encryptedCID || !encryptedSymmetricKey) {
+        return;
+      }
 
       const hashedEmail = hashEmail(email);
 
@@ -64,9 +64,9 @@ const CreateContractPage = () => {
           abi: ABI,
           functionName: "issueContract",
           args: [
-            "682f14a83601eba5d0b7b572372d2f1e5d573a11d25722752aaae98885c91567",
+            encryptedCID,
             hashedEmail,
-            "encryptedSymmetricKey",
+            encryptedSymmetricKey,
           ],
         });
         const txHash = await walletClient.writeContract(request);
@@ -78,7 +78,7 @@ const CreateContractPage = () => {
       }
 
       setEncryptedCID(
-        "682f14a83601eba5d0b7b572372d2f1e5d573a11d25722752aaae98885c91567",
+        encryptedCID,
       );
       setIsLoading(false);
       setCurrentStep(Steps.GetLink);
