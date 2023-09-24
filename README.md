@@ -33,6 +33,7 @@ Contract signers don't need wallet & gas fees. They only have to social login an
 | Polygon PoS Mumbai    | 80001   | 0x24c73a5C2dB4111166AE1cdf3fEe7dA8EFFf80D5 |
 | Polygon zkEVM Testnet | 1442    | 0x8Dc2898e6Cc89E85f4d1E6645Cb8D1A6d88f80c7 |
 | Scroll Sepolia        | 534351  | 0xc4d686f689332568953fc5640dA670a97b1F8B52 |
+| Gnosis Chiado         | 10200   | 0x9795ED7a57F4A06867f06DcDc83D368583853da2 |
 
 ### User experience flow
 
@@ -77,6 +78,14 @@ Signer:
 5. Decrypt the `encryptedCID` and get document CID
 6. View the contract document with CID
 7. Sign with Gasless tx by Biconomy SDK
+
+### UX optimization with AA
+
+![AA strategy](./public/AAstrategy.png)
+
+We optimizes UX by combining Social Login + EOA creation and Biconomy SDK v2 Smart Account.
+
+Signers can signin with Google / Email on this app and hold EOA, this system is enabled by Privy for Authentication and EOA creation. And before user execute transactions, we provide ERC4337 wallet with paymaster by Biconomy SDK v2. Then users can execute transactions without gasfees and bad signing UX.
 
 ### Sequence
 
