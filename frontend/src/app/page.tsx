@@ -3,17 +3,17 @@ import Link from "next/link";
 
 const LandingPage = () => {
   return (
-    <main className="mx-auto w-full">
-      <section className="bg-gradient mx-auto">
-        <header className="shadow-b-lg z-10 h-[70px] w-full py-3">
-          <div className="mx-auto flex h-full max-w-5xl items-center justify-between">
-            <div className="text-2xl font-bold text-white">
-              <Link href={"/"}>Samurai Sign</Link>
-            </div>
-            <Link href={"/issuers/contracts/new"}>
-              <div className="rounded-2xl border border-white px-4 py-1 text-lg font-bold text-white">
-                Create New Contract
-              </div>
+    <main className="w-full">
+      <section className="bg-gradient">
+        <header className="shadow-b-lg z-10 h-[70px] w-full px-20 pt-12">
+          <div className="">
+            <Link href={"/"}>
+              <Image
+                height={28}
+                width={350}
+                src={"/images/samurai.svg"}
+                alt="samurai logo"
+              />
             </Link>
           </div>
         </header>
@@ -24,7 +24,7 @@ const LandingPage = () => {
               Document Signing dApp
             </h2>
             <Link href={"/issuers/contracts/new"}>
-              <div className="ml-auto mt-6 max-w-fit rounded-2xl border border-white px-6 py-2 text-2xl font-bold text-white">
+              <div className="ml-auto mt-7 max-w-fit rounded-2xl border border-white px-6 py-2 text-2xl font-bold text-white">
                 Create New Contract
               </div>
             </Link>
