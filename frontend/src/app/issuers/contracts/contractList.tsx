@@ -11,7 +11,7 @@ import { useAccount, useContractRead } from "wagmi";
 
 type Contract = {
   enCid: string;
-  recipient: string;
+  hashedEmail: string;
   status: boolean;
 };
 
@@ -26,9 +26,11 @@ const Row = ({ contract }: RowProps) => {
         scope="row"
         className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
       >
-        {contract.enCid}
+        {contract.enCid.slice(0, 15)}...{contract.enCid.slice(-15)}
       </th>
-      <td className="px-6 py-4">{contract.recipient}</td>
+      <td className="px-6 py-4">
+        {contract.hashedEmail.slice(0, 15)}...{contract.hashedEmail.slice(-15)}
+      </td>
       <td className="px-6 py-4">
         {contract.status ? (
           <span className="rounded-lg bg-green-400 px-2 py-1 text-white">
@@ -63,16 +65,16 @@ const ContractList = () => {
     if (error) toast.error(error?.message);
   }, [error]);
 
-  if (status !== "authenticated")
-    return (
-      <div className="mx-auto">
-        <WorldCoinButton
-          onClick={() => {
-            signIn("worldcoin");
-          }}
-        />
-      </div>
-    );
+  // if (status !== "authenticated")
+  //   return (
+  //     <div className="mx-auto">
+  //       <WorldCoinButton
+  //         onClick={() => {
+  //           signIn("worldcoin");
+  //         }}
+  //       />
+  //     </div>
+  //   );
 
   if (!address)
     return (
@@ -94,10 +96,10 @@ const ContractList = () => {
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  ID
+                  enCID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Recipient
+                  HashedEmail
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Status
@@ -110,7 +112,7 @@ const ContractList = () => {
                   <Row
                     contract={{
                       enCid: contract.encryptedCid,
-                      recipient: contract.recipient,
+                      hashedEmail: contract.hashedEmail,
                       status: contract.isSigned,
                     }}
                     key={contract.encryptedCid}
