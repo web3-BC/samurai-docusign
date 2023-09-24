@@ -7,6 +7,7 @@ import {
   DocumentCallback,
   OnDocumentLoadSuccess,
 } from "react-pdf/dist/cjs/shared/types";
+import Spinner from "./spinner";
 
 pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_SOURCE;
 
@@ -29,24 +30,34 @@ const PDFViewer = ({ file, className, scale }: PDFViewerProps) => {
     setShowDocument(true);
   };
   return (
-    <Document
-      file={file}
-      onLoadError={onLoadError}
-      onLoadSuccess={onLoadSucess}
-      renderMode="canvas"
-      className={`overflow-y-scroll shadow-xl ${className || ""} ${showDocument || "hidden"}`}
-    >
-      {Array.from(new Array(pageNum), (_, index) => (
-        <Page
-          key={index}
-          scale={scale || 1}
-          pageNumber={index + 1}
-          renderTextLayer={false}
-          renderAnnotationLayer={false}
-          loading="Loading Contract..."
-        />
-      ))}
-    </Document>
+    <>
+      {showDocument || (
+        <div className="w-[612px] flex flex-col justify-center space-y-4">
+          <Spinner className="mx-auto text-gray-500" />
+          <p className="mx-auto">loading...</p>
+        </div>
+      )}
+      <Document
+        file={file}
+        onLoadError={onLoadError}
+        onLoadSuccess={onLoadSucess}
+        renderMode="canvas"
+        className={`overflow-y-scroll shadow-xl ${className || ""} ${
+          showDocument || "hidden"
+        }`}
+      >
+        {Array.from(new Array(pageNum), (_, index) => (
+          <Page
+            key={index}
+            scale={scale || 1}
+            pageNumber={index + 1}
+            renderTextLayer={false}
+            renderAnnotationLayer={false}
+            loading="Loading Contract..."
+          />
+        ))}
+      </Document>
+    </>
   );
 };
 
