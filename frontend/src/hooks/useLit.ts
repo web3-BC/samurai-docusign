@@ -75,7 +75,7 @@ export const useLit = () => {
         standardContractType: "LitAction",
         chain: chain,
         method: "verify",
-        parameters: [encryptedString, 'aaa'],
+        parameters: [encryptedString, accessToken],
         returnValueTest: {
           comparator: "=",
           value: "true",
