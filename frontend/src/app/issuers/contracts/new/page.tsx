@@ -72,7 +72,6 @@ const CreateContractPage = () => {
         setIsLoading(false);
         return;
       }
-
       setIsLoading(false);
       setEncryptedCID(encryptedCID);
       setCurrentStep(Steps.GetLink);
