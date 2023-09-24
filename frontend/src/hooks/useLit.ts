@@ -65,6 +65,7 @@ export const useLit = () => {
     address: string,
     encryptedString: string,
     encryptedSymmetricKey: string,
+    accessToken: string,
   ) => {
     await connect();
 
@@ -74,7 +75,7 @@ export const useLit = () => {
         standardContractType: "LitAction",
         chain: chain,
         method: "verify",
-        parameters: ["", ""],
+        parameters: [encryptedString, accessToken],
         returnValueTest: {
           comparator: "=",
           value: "true",
@@ -127,6 +128,8 @@ export const useLit = () => {
     const CID = await LitJsSdk.decryptString(encryptedCID, symmetricKey);
     return { CID };
   };
+
+  
 
   return { encrypt, decrypt };
 };

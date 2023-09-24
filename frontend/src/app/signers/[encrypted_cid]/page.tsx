@@ -58,6 +58,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
             addr,
             params.encrypted_cid,
             encryptedSymmetricKey,
+            jwt
           );
           setCID(CID);
           setEncryptState(EncryptState.Success);
