@@ -9,7 +9,7 @@ import Button from "@/components/button";
 import { signIn, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import WorldCoinButton from "@/components/worldcoinButton";
-import { createWalletClient, custom } from "viem";
+import { Address, createWalletClient, custom } from "viem";
 import { CONTRACT_ADDRESS, currentChain, publicClient } from "@/libs/viem";
 import { ABI } from "@/constants";
 import toast from "react-hot-toast";
@@ -25,9 +25,10 @@ const CreateContractPage = () => {
   const initialStep = Number(queryStep);
   const [currentStep, setCurrentStep] = useState<Steps>(initialStep);
   const [file, setFile] = useState<File>();
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [encryptedCID, setEncryptedCID] = useState<string>("");
+  const [encryptedCID, setEncryptedCID] = useState("");
+  const [txHash, setTxHash] = useState<Address>();
   const { status } = useSession();
 
   if (currentStep === Steps.VerifyHuman && status === "authenticated") {
@@ -64,8 +65,8 @@ const CreateContractPage = () => {
           functionName: "issueContract",
           args: [encryptedCID, hashedEmail, encryptedSymmetricKey],
         });
-        const result = await walletClient.writeContract(request);
-        console.log({ result });
+        const txHash = await walletClient.writeContract(request);
+        setTxHash(txHash);
       } catch (error) {
         toast.error(error as string);
         setIsLoading(false);
@@ -120,25 +121,27 @@ const CreateContractPage = () => {
               );
             case Steps.RegisterSigner:
               return (
-                <div className="mx-auto w-1/3">
+                <div className="mx-auto w-1/2">
                   <h3 className="mb-8 text-center text-3xl font-bold">
                     Register signer email address
                   </h3>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block font-medium text-gray-900 dark:text-white"
-                  >
-                    Signer email
-                  </label>
-                  <input
-                    type="text"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="mb-8 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    required
-                  />
-                  <div className="flex flex-row justify-between">
+                  <div className="mx-auto w-2/3">
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block font-medium text-gray-900 dark:text-white"
+                    >
+                      Signer email
+                    </label>
+                    <input
+                      type="text"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="mb-8 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                  <div className="mx-auto flex w-2/3 flex-row justify-between">
                     <Button
                       text="Back"
                       onClick={() => setCurrentStep(Steps.FileUpload)}
@@ -157,24 +160,38 @@ const CreateContractPage = () => {
               );
             case Steps.GetLink:
               return (
-                <div className="mx-auto w-1/3">
+                <div className="mx-auto w-2/5">
                   {isLoading ? (
-                    <Spinner />
+                    <Spinner className="mx-auto h-12 w-12" />
                   ) : (
                     <>
-                      <h3 className="mb-8 text-center text-3xl font-bold">
+                      <h3 className="mb-2 text-center text-3xl font-bold">
                         Create contract succeeded!🎉
                       </h3>
+                      {txHash && (
+                        <p className="text-center">
+                          You can check your tx{" "}
+                          <a
+                            href={`https://mumbai.polygonscan.com/${txHash}`}
+                            className="text-secondary-500"
+                          >
+                            here
+                          </a>
+                        </p>
+                      )}
 
                       <Image
                         width={100}
                         height={100}
                         alt="Success Icon"
                         src="/success-icon.png"
-                        className="mx-auto w-2/4"
+                        className="mx-auto mt-8 w-2/4"
                       />
-                      <p>Click url to copy!</p>
-                      <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
+
+                      <div className="text-center">
+                        <p>Click url to copy!</p>
+                        <CopyURL url={`https://ipfs.io/ipfs/${encryptedCID}`} />
+                      </div>
                     </>
                   )}
                 </div>
