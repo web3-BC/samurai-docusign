@@ -70,7 +70,7 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
 
   const url = `https://ipfs.io/ipfs/${CID}`;
   return (
-    <main className="h-[calc(100vh-70px)] bg-slate-50 py-16">
+    <main className="h-[calc(100vh-70px)] py-16">
       {(() => {
         switch (encryptState) {
           case EncryptState.InProgress:

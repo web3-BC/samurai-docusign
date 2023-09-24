@@ -18,6 +18,7 @@ type PDFViewerProps = {
 
 const PDFViewer = ({ file, className, scale }: PDFViewerProps) => {
   const [pageNum, setPageNum] = useState<number>(0);
+  const [showDocument, setShowDocument] = useState<boolean>(false);
   const onLoadError = (e: Error): void => {
     console.error("react-pdf load error:", e.message);
   };
@@ -25,6 +26,7 @@ const PDFViewer = ({ file, className, scale }: PDFViewerProps) => {
     document: DocumentCallback,
   ): void => {
     setPageNum(document.numPages);
+    setShowDocument(true);
   };
   return (
     <Document
@@ -32,7 +34,7 @@ const PDFViewer = ({ file, className, scale }: PDFViewerProps) => {
       onLoadError={onLoadError}
       onLoadSuccess={onLoadSucess}
       renderMode="canvas"
-      className={`overflow-y-scroll ${className || ""}}`}
+      className={`overflow-y-scroll shadow-xl ${className || ""}} ${showDocument || "hidden"}`}
     >
       {Array.from(new Array(pageNum), (_, index) => (
         <Page
