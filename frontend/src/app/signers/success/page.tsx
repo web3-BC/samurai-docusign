@@ -2,7 +2,7 @@
 
 const SucccessPage = () => {
   return (
-    <div className="flex h-[calc(100vh-70px-133px)] items-center justify-center">
+    <div className="flex h-[calc(100vh-70px-179px)] items-center justify-center">
       <div>
         <div className="flex flex-col items-center space-y-4">
           <svg

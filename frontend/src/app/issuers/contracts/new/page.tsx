@@ -82,7 +82,7 @@ const CreateContractPage = () => {
   };
 
   return (
-    <main className="min-h-[calc(100vh-70px-133px)] py-16">
+    <main className="min-h-[calc(100vh-70px-179px)] py-16">
       <div className="mx-auto w-[1200px]">
         <Stepper currentStep={currentStep} className="mb-8" />
         {(() => {
