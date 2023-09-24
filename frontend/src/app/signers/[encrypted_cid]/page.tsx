@@ -42,11 +42,12 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
       if (!userId) return;
       const email = await getEmailFromUserId(userId);
       console.log(email);
-
+      
       if (embeddedWallet && isFirstLitReq) {
+        setIsFirstLitReq(false);
         const provider = await embeddedWallet.getEthereumProvider();
         const addr = embeddedWallet?.address;
-        console.log('addr' + addr);
+        console.log('addr: ' + addr);
 
         const { encryptedSymmetricKey } = await getContractByEncryptedCid(params.encrypted_cid);
         try {
@@ -60,7 +61,6 @@ const SignPage = ({ params }: { params: { encrypted_cid: string } }) => {
           );
           setCID(CID);
           setEncryptState(EncryptState.Success);
-          setIsFirstLitReq(false);
         } catch (e) {
           console.dir(e, { depth: null });
           setEncryptState(EncryptState.Fail);

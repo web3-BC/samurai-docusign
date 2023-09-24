@@ -1,7 +1,7 @@
 "use client";
 
 import { createWalletClient, custom } from "viem";
-import { chain, client } from "@/libs/lit";
+import { chain, client, litActionUrl } from "@/libs/lit";
 import * as LitJsSdk from "@lit-protocol/lit-node-client";
 import { SiweMessage } from "siwe";
 import { AccessControlConditions, AuthSig } from "@lit-protocol/types";
@@ -14,22 +14,22 @@ export const useLit = () => {
     await client.connect();
   };
 
-  const ACCs: AccessControlConditions = [
-    {
-      contractAddress: "ipfs://QmcgbVu2sJSPpTeFhBd174FnmYmoVYvUFJeDkS7eYtwoFY",
-      standardContractType: "LitAction",
-      chain: chain,
-      method: "go",
-      parameters: ["100"],
-      returnValueTest: {
-        comparator: "=",
-        value: "true",
-      },
-    },
-  ];
-
   const encrypt = async (cid: string) => {
     await connect();
+
+    const ACCs: AccessControlConditions = [
+      {
+        contractAddress: litActionUrl,
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "verify",
+        parameters: ["", ""],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
 
     // check if wallet is connected
     if (localStorage.getItem("wagmi.connected") != "true") {
@@ -66,7 +66,21 @@ export const useLit = () => {
     encryptedString: string,
     encryptedSymmetricKey: string,
   ) => {
-    connect();
+    await connect();
+
+    const ACCs: AccessControlConditions = [
+      {
+        contractAddress: litActionUrl,
+        standardContractType: "LitAction",
+        chain: chain,
+        method: "verify",
+        parameters: ["", ""],
+        returnValueTest: {
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
 
     const siweMessage = new SiweMessage({
       domain: "localhost:3000",
