@@ -184,7 +184,7 @@ const CreateContractPage = () => {
                         width={100}
                         height={100}
                         alt="Success Icon"
-                        src="/success-icon.png"
+                        src="/images/success-icon.png"
                         className="mx-auto mt-8 w-2/4"
                       />
 
