@@ -19,7 +19,7 @@ const CopyURL = ({ url }: CopyURLProps) => {
   };
 
   return (
-    <div className="relative border border-gray-400 rounded-xl p-2">
+    <div className="relative border border-gray-400 rounded-xl p-2 cursor-pointer">
       {isCopied && (
         <div className="absolute -top-12 left-0 right-0 z-10 mx-auto max-w-fit rounded-lg border border-gray-200 bg-white px-3 py-2 font-medium text-gray-900 shadow-sm">
           Copied!
